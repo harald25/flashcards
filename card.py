@@ -14,7 +14,11 @@ class Card:
         return f"Topic:  {self.topic}\nText:   {self.text}\nUser:   {self.user}\nScore:  {self.score}"
 
     def get_correct_attempts(self):
-        pass
+        correct = 0
+        for bit in self.score:
+            if bit == "1":
+                correct += 1
+        return correct
 
     def get_total_attempts(self):
         pass
