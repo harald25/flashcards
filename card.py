@@ -9,6 +9,7 @@ class Card:
         self.text = text
         self.user = user
         self.score = score
+        self.significant_attempts = 5
 
     def __repr__(self):
         return f"Topic:  {self.topic}\nText:   {self.text}\nUser:   {self.user}\nScore:  {self.score}"
@@ -21,7 +22,7 @@ class Card:
         return correct
 
     def get_total_attempts(self):
-        pass
+        return len(self.score)
 
     def get_score_string(self) -> str:
         """Returns a string of the total"""
@@ -32,10 +33,28 @@ class Card:
                 correct += 1
         return f"{correct} / {total_attempts}"
 
-    def calculate_probability_weight(self):
-        """Takes into consideration the last 5 attempts on each card. The most recent attempt counts twice as much
-        as the second most recent attempt, and so on."""
-        return
+    def get_probability_weight(self):
+        """Takes into consideration the last 5 attempts on each card. The most recent attempt counts for 10 weight
+        points. The second most recent card counts for 4 weight points, and so on. It only counts points for failed
+        attempts. This gives cards with more failed attempts a higher probability weight.
+        TODO: This calculation is subject for revision."""
+
+        probability_weight = 0
+        n = self.significant_attempts
+
+        for i in range(1, n+1):
+            if len(self.score) >= i:
+                bit = int(self.score[-i])
+                if bit == 0:
+                    probability_weight += 1 + n - i
+            else:
+                probability_weight += 1 + n - i
+
+        if probability_weight == 0:
+            probability_weight += 1
+
+        return probability_weight
+
 
     def add_attempt(self, correct: bool):
         """Adds an attempt to the bit-string representing the score."""
