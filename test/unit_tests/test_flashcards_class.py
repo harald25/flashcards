@@ -1,5 +1,6 @@
 import pytest
 from flashcards import Flashcards
+from card import Card
 
 
 # Variables
@@ -80,8 +81,52 @@ def test_add_active_topic_adready_added():
     expected = ["IN3050 - Machine Learning", "IN3240 - Software testing"]
     assert fc.active_topics == expected
 
+def test_draw_card():
+    fc = Flashcards(filename=filename)
+    fc.draw_card(seed=1)
+    expected = fc.all_cards[0]
+    assert fc.current_card == expected
 
+def test_chack_if_valid_username_normal():
+    fc = Flashcards(filename=filename)
+    username = "Eric"
+    expected = True
+    assert fc.check_if_valid_username(username) is expected
 
+def test_chack_if_valid_username_too_long():
+    fc = Flashcards(filename=filename)
+    username = "Abcdefghijklmnopqrstuvwxyz"
+    expected = False
+    assert fc.check_if_valid_username(username) is expected
+
+def test_chack_if_valid_username_max_length():
+    fc = Flashcards(filename=filename)
+    username = "Abcdefghijklmnopqrstuvwxy"
+    expected = True
+    assert fc.check_if_valid_username(username) is expected
+
+def test_chack_if_valid_username_not_alphanumerical_beacuse_of_space():
+    fc = Flashcards(filename=filename)
+    username = "John is Cool"
+    expected = False
+    assert fc.check_if_valid_username(username) is expected
+
+def test_chack_if_valid_username_not_alphanumerical_beacuse_of_empty_string():
+    fc = Flashcards(filename=filename)
+    username = ""
+    expected = False
+    assert fc.check_if_valid_username(username) is expected
+
+def test_chack_if_valid_username_already_in_use():
+    fc = Flashcards(filename=filename)
+    username = "Anna"
+    expected = False
+    assert fc.check_if_valid_username(username) is expected
+
+def test_add_user():
+    fc = Flashcards(filename=filename)
+    username = "Eric"
+    fc.
 
 # TODO: Add user, then update from file
 # TODO: Add cards, then update from file

@@ -4,10 +4,9 @@ from card import Card
 import os
 from datetime import datetime, timezone
 
+# TODO: Save card should be here
+# TODO: Do i need backups?
 
-"""
-TODO: Save card should be here
-"""
 
 class Flashcards:
     def __init__(self, filename: str="data.csv"):
@@ -26,8 +25,8 @@ class Flashcards:
         self.active_topics = self.all_topics
         self.current_card = None
 
-        # Draw the first card
-        self.draw_card()
+        # Draw the first card TODO: activate
+        # self.draw_card()
 
     def import_data_from_file(self):
         """Imports all data from csv-file."""
@@ -79,7 +78,7 @@ class Flashcards:
         if topic not in self.active_topics:
             self.active_topics.append(topic)
 
-    def draw_card(self):
+    def draw_card(self, seed=None):
         # Picks the first user in the active_users list, and moves him to the back of the list.
         user = self.active_users.pop(0)
         self.active_users.append(user)
@@ -94,27 +93,14 @@ class Flashcards:
         probability_weights = []
         for card in pool_of_possible_cards:
             probability_weights.append(card.get_probability_weight())
-        for i in len(probability_weights):
+        for i in range(len(probability_weights)):
             weight = probability_weights[i]
             weight = weight ** ((100 - self.degree_of_randomness) / 100)
+            probability_weights[i] = weight
 
-
-
-
-    def backup_data(self):
-        df = pd.read_csv('data.csv', sep=";")
-        df.to_csv("data_backup.csv", index=False, sep=";")
-
-    def get_time_last_backup(self, filename="data_backup.csv"):
-        statbuf = os.stat(filename)
-        print("Modification time: {}".format(statbuf.st_mtime))
-
-        modified = datetime.fromtimestamp(statbuf.st_mtime, tz=timezone.utc).strftime("%d. %B %Y, %H:%M")
-        return modified
-
-    def restore_from_backup(self, filename="data_backup.csv"):
-        df = pd.read_csv(filename, sep=";")
-        df.to_csv("data.csv", index=False, sep=";")
+        random.seed(seed)
+        choices = random.choices(pool_of_possible_cards, probability_weights, k=1)
+        self.current_card = choices[0]
 
     def check_if_valid_username(self, username):
         """Checks if a username is valid. Max length: 25 chars.
@@ -143,8 +129,6 @@ class Flashcards:
         # Adds column to datafile
         df = pd.read_csv('data.csv', sep=";")
         length = len(df.index)
-        column = ["0/0" for _ in range(length)]
-        df[username] = column
         df.to_csv("data.csv", index=False, sep=";")
 
         # Updates system
