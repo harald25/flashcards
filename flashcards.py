@@ -15,15 +15,15 @@ class Flashcards:
         self.all_cards = []
         self.all_users = []
         self.all_topics = []
-        self.degree_of_randomness = 50
+        self.degree_of_randomness = 100
         self.filename = filename
 
         # Importing all data from csv-file
         self.import_data_from_file()
 
         # Variables for gameplay
-        self.participating_users = self.all_users
-        self.available_topics = self.all_topics
+        self.active_users = self.all_users
+        self.active_topics = self.all_topics
         self.current_card = None
 
         # Draw the first card
@@ -59,28 +59,47 @@ class Flashcards:
 
         self.import_data_from_file()
 
-    def remove_participant(self, participant: str):
+    def remove_active_users(self, participant: str):
         """Removes a user from list of participating users."""
-        if participant in self.participating_users:
-            self.participating_users.remove(participant)
+        if participant in self.active_users:
+            self.active_users.remove(participant)
 
-    def add_participant(self, participant: str):
+    def add_active_users(self, participant: str):
         """Adds a user to the list of participating users."""
-        if participant not in self.participating_users:
-            self.participating_users.append(participant)
+        if participant not in self.active_users:
+            self.active_users.append(participant)
 
-    def add_available_topic(self, topic: str):
-        """Adds a user to the list of participating users."""
-        if topic not in self.available_topics:
-            self.available_topics.append(topic)
-
-    def remove_available_topic(self, topic: str):
+    def remove_active_topic(self, topic: str):
         """Removes a topic from the list of available topics."""
-        if topic in self.available_topics:
-            self.available_topics.remove(topic)
+        if topic in self.active_topics:
+            self.active_topics.remove(topic)
 
-    def draw_card(self, topics=None, user=None):
-        pass
+    def add_active_topic(self, topic: str):
+        """Adds a user to the list of participating users."""
+        if topic not in self.active_topics:
+            self.active_topics.append(topic)
+
+    def draw_card(self):
+        # Picks the first user in the active_users list, and moves him to the back of the list.
+        user = self.active_users.pop(0)
+        self.active_users.append(user)
+
+        # Adds possible cards to pool of possible cards
+        pool_of_possible_cards = []
+        for card in self.all_cards:
+            if card.topic in self.active_topics and card.user == user:
+                pool_of_possible_cards.append(card)
+
+        # Calculate probabilities for each card
+        probability_weights = []
+        for card in pool_of_possible_cards:
+            probability_weights.append(card.get_probability_weight())
+        for i in len(probability_weights):
+            weight = probability_weights[i]
+            weight = weight ** ((100 - self.degree_of_randomness) / 100)
+
+
+
 
     def backup_data(self):
         df = pd.read_csv('data.csv', sep=";")
