@@ -35,7 +35,7 @@ class Flashcards:
         df = pd.read_csv(self.filename, sep=";")
 
         for user in df.head():
-            if user not in ["Deck", "Card"]:
+            if user not in ["Topic", "Text"]:
                 for i in range(len(df[user])):
                     topic = df["Topic"][i]
                     text = df["Text"][i]
@@ -59,16 +59,15 @@ class Flashcards:
 
         self.import_data_from_file()
 
+    def remove_participant(self, participant: str):
+        """Removes a user from list of participating users."""
+        if participant in self.participating_users:
+            self.participating_users.remove(participant)
 
     def add_participant(self, participant: str):
         """Adds a user to the list of participating users."""
         if participant not in self.participating_users:
             self.participating_users.append(participant)
-
-    def remove_participant(self, participant: str):
-        """Removes a user from list of participating users."""
-        if participant in self.participating_users:
-            self.participating_users.remove(participant)
 
     def add_available_topic(self, topic: str):
         """Adds a user to the list of participating users."""
