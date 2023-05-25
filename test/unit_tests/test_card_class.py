@@ -8,12 +8,9 @@ test_text_1 = "What is a genetic algorithm?"
 test_user_1 = "Bernd"
 test_score_1 = "00010010111"
 
-# Test objects
-test_card = Card(test_topic_1, test_text_1, test_user_1, test_score_1)
-
 
 def test_creation_of_a_card():
-    created_card = Card(test_topic_1, test_text_1, test_user_1, test_score_1)
+    test_card = Card(test_topic_1, test_text_1, test_user_1, test_score_1)
 
 def test_card_repr():
     test_card = Card(test_topic_1, test_text_1, test_user_1, test_score_1)
