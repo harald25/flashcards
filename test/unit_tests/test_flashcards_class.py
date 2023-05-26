@@ -126,8 +126,79 @@ def test_chack_if_valid_username_already_in_use():
 def test_add_user():
     fc = Flashcards(filename=filename)
     username = "Eric"
+    expected = ["Anna", "Bill", "Carl", "Dave", "Eric"]
     fc.add_user(username)
+    assert fc.all_users == expected
+    fc_2 = Flashcards(filename=filename)
+    assert fc_2.all_users == expected
 
-# TODO: Add user, then update from file
-# TODO: Add cards, then update from file
+def test_add_user_already_added():
+    fc = Flashcards(filename=filename)
+    username = "Bill"
+    expected = ["Anna", "Bill", "Carl", "Dave", "Eric"]
+    fc.add_user(username)
+    assert fc.all_users == expected
+    fc_2 = Flashcards(filename=filename)
+    assert fc_2.all_users == expected
+
+def test_remove_user():
+    fc = Flashcards(filename=filename)
+    username = "Eric"
+    expected = ["Anna", "Bill", "Carl", "Dave"]
+    fc.remove_user(username)
+    assert fc.all_users == expected
+    fc_2 = Flashcards(filename=filename)
+    assert fc_2.all_users == expected
+
+def test_remove_user_not_existing():
+    fc = Flashcards(filename=filename)
+    username = "Eric"
+    expected = ["Anna", "Bill", "Carl", "Dave"]
+    fc.remove_user(username)
+    assert fc.all_users == expected
+    fc_2 = Flashcards(filename=filename)
+    assert fc_2.all_users == expected
+
+def test_edit_username():
+    fc = Flashcards(filename=filename)
+    old_username = "Carl"
+    new_username = "Cruz"
+    expected = ["Anna", "Bill", "Cruz", "Dave"]
+    fc.edit_username(old_username, new_username)
+    assert fc.all_users == expected
+    # Change back
+    fc.edit_username(new_username, old_username)
+
+def test_get_list_of_card_texts():
+    fc = Flashcards(filename=filename)
+    expected = ["What is a genetic algorithm?", "How does the weights in a multi layer perceptron (MLP) get updated?",
+                "What are the seven test principles?", "What is unit testing?"]
+    assert fc.get_list_of_card_texts() == expected
+
+def test_edit_card():
+    fc = Flashcards(filename=filename)
+    old_card_text = "What is a genetic algorithm?"
+    new_card_text = "What is bit-flip mutation?"
+    fc.edit_card(old_card_text, new_card_text)
+    expected = "What is bit-flip mutation?"
+    assert fc.get_list_of_card_texts()[0] == expected
+    # Change back
+    fc.edit_card(new_card_text, old_card_text)
+
+def test_add_card():
+    fc = Flashcards(filename=filename)
+    new_card_topic = "IN3050 - Machine Learning"
+    new_card_text = "What is inverse mutation?"
+    fc.add_card(new_card_topic, new_card_text)
+    assert fc.get_list_of_card_texts()[-1] == new_card_text
+
+# TODO
+# def test_remove_card():
+#     fc = Flashcards(filename=filename)
+#     card_to_be_removed_text = "What is inverse mutation?"
+#     # fc.remove_card(card_to_be_removed_text)
+#     # expected = "What is unit testing?"
+#     # assert fc.get_list_of_card_texts()[-1] == expected
+#
+
 

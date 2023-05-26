@@ -127,9 +127,11 @@ class Flashcards:
             return False
 
         # Adds column to datafile
-        df = pd.read_csv('data.csv', sep=";")
+        df = pd.read_csv(self.filename, sep=";")
         length = len(df.index)
-        df.to_csv("data.csv", index=False, sep=";")
+        column = ["" for _ in range(length)]
+        df[username] = column
+        df.to_csv(self.filename, index=False, sep=";")
 
         # Updates system
         self.update_from_file()
@@ -141,15 +143,15 @@ class Flashcards:
             return False
 
         # Removes column from datafile
-        df = pd.read_csv('data.csv', sep=";")
+        df = pd.read_csv(self.filename, sep=";")
         df.drop(username, axis=1, inplace=True)
-        df.to_csv("data.csv", index=False, sep=";")
+        df.to_csv(self.filename, index=False, sep=";")
 
         # Updates system
         self.update_from_file()
         return True
 
-    def edit_user_name(self, old_username, new_username):
+    def edit_username(self, old_username, new_username):
         """Changes the name of a user"""
 
         # Check if old username exists
@@ -161,9 +163,9 @@ class Flashcards:
             return False
 
         # Update username
-        df = pd.read_csv('data.csv', sep=";")
+        df = pd.read_csv(self.filename, sep=";")
         df = df.rename({old_username: new_username}, axis=1)
-        df.to_csv("data.csv", index=False, sep=";")
+        df.to_csv(self.filename, index=False, sep=";")
 
         # Updates system
         self.update_from_file()
@@ -174,8 +176,8 @@ class Flashcards:
 
     def get_list_of_card_texts(self):
         """Reutns a list of strings of all the current cards in the deck."""
-        df = pd.read_csv('data.csv', sep=";")
-        return list(df["Card"])
+        df = pd.read_csv(self.filename, sep=";")
+        return list(df["Text"])
 
 
     def edit_card(self, old_card_text, new_card_text):
@@ -186,9 +188,9 @@ class Flashcards:
             return False
 
         # Updates data file
-        df = pd.read_csv('data.csv', sep=";")
-        df["Card"] = df["Card"].replace(old_card_text, new_card_text)
-        df.to_csv("data.csv", index=False, sep=";")
+        df = pd.read_csv(self.filename, sep=";")
+        df["Text"] = df["Text"].replace(old_card_text, new_card_text)
+        df.to_csv(self.filename, index=False, sep=";")
 
         # Updates system
         self.update_from_file()
@@ -203,38 +205,38 @@ class Flashcards:
             return False
 
         # Updates data file
-        df = pd.read_csv('data.csv', sep=";")
+        df = pd.read_csv(self.filename, sep=";")
 
         # Add new row
         length = len(df.columns)
-        new_row = ["0/0" for _ in range(length)]
+        new_row = ["" for _ in range(length)]
         new_row[0] = new_card_topic
         new_row[1] = new_card_text
         df.loc[len(df.index)] = new_row
 
         # Save data to file
-        df.to_csv("data.csv", index=False, sep=";")
+        df.to_csv(self.filename, index=False, sep=";")
 
         # Updates system
         self.update_from_file()
 
         return True
 
-    def remove_card(self, card_to_be_removed):
+    def remove_card(self, card_text_to_be_removed):
         """Adds a card to the data file, and updates system."""
 
         # Check if card exists
-        if not card_to_be_removed in self.get_list_of_card_texts():
+        if not card_text_to_be_removed in self.get_list_of_card_texts():
             return False
 
         # Import data file
-        df = pd.read_csv('data.csv', sep=";")
+        df = pd.read_csv(self.filename, sep=";")
 
         # Remove row
-        df = df[df["Card"].str.contains(card_to_be_removed) == False]
+        df = df[df["Text"].str.contains(card_text_to_be_removed) is False]
 
         # Save data to file
-        df.to_csv("data.csv", index=False, sep=";")
+        df.to_csv(self.filename, index=False, sep=";")
 
         # Updates system
         self.update_from_file()
