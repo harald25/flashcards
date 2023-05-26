@@ -126,7 +126,7 @@ def test_chack_if_valid_username_already_in_use():
 def test_add_user():
     fc = Flashcards(filename=filename)
     username = "Eric"
-    fc.
+    fc.add_user(username)
 
 # TODO: Add user, then update from file
 # TODO: Add cards, then update from file
