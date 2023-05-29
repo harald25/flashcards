@@ -14,6 +14,9 @@ class Controller():
         # Start view-app main loop
         self.view.mainloop()
 
+        # Variables
+        self.open_dialog_window = False
+
     def change_appearance_mode_event(self, new_appearance_mode: str):
         """Changes appearance mode. Possibe values: "dark", "light"."""
         self.view.change_appearance_mode_event(new_appearance_mode)
