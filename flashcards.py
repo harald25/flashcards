@@ -26,7 +26,7 @@ class Flashcards:
         self.current_card = None
 
         # Draw the first card TODO: activate
-        # self.draw_card()
+        self.draw_card()
 
     def import_data_from_file(self):
         """Imports all data from csv-file."""
@@ -243,3 +243,18 @@ class Flashcards:
         self.update_from_file()
 
         return True
+
+
+    def save_backup(self):
+        # TODO:
+        # filename = "data_backup_<string repr of date and time>.csv
+        # TODO: Unit test
+        pass
+
+    def restore_from_backup(self, backup):
+        # TODO:
+        # Copies the backup file over the original file
+        # TODO: Unit test
+        pass
+
+
