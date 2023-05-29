@@ -233,7 +233,8 @@ class Flashcards:
         df = pd.read_csv(self.filename, sep=";")
 
         # Remove row
-        df = df[df["Text"].str.contains(card_text_to_be_removed) is False]
+        i = df[df["Text"] == card_text_to_be_removed].index
+        df = df.drop(i)
 
         # Save data to file
         df.to_csv(self.filename, index=False, sep=";")

@@ -1,23 +1,22 @@
-
-
+from controller import Controller
 
 
 """Project structure:
+Main
+- One main file that creates the controller
+
+Controller
+- Creates an instance of view
+- Creates an instance of model = Flashcards()
 
 View
-- Menu frame
-- Play frame (Correct, wrong, skip, "edit this card")
-- Settings frame
-- Edit cards frame (add multiple cards)
-- Statistics frame (Statistics on different users)
+- The view is the app instance
+- Main app instance imports all files
 
 Model
 - data.csv
 - flashcards (Needs to keep track of last all answers on each card)
 - card
-
-Controller (Named "main")
-- One main file that creates the customtkinter app and keeps an active
 
 Documentation readme-file:
 - Project structure
@@ -30,3 +29,6 @@ Test (own folder with test files and test_data.csv-file)
 - Unit tests
 - test a lot of different user stories
 """
+
+if __name__ == '__main__':
+    c = Controller()
