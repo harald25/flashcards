@@ -58,12 +58,12 @@ class Flashcards:
 
         self.import_data_from_file()
 
-    def remove_active_users(self, participant: str):
+    def remove_active_user(self, participant: str):
         """Removes a user from list of participating users."""
         if participant in self.active_users:
             self.active_users.remove(participant)
 
-    def add_active_users(self, participant: str):
+    def add_active_user(self, participant: str):
         """Adds a user to the list of participating users."""
         if participant not in self.active_users:
             self.active_users.append(participant)
