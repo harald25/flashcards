@@ -1,12 +1,11 @@
 import customtkinter as ctk
 from frames.choose_active_users_frame import ChooseActiveUserFrame
+from frames.choose_active_topics_frame import ChooseActiveTopicsFrame
 
 class SettingsFrame(ctk.CTkFrame):
     def __init__(self, parent, controller):
         ctk.CTkFrame.__init__(self, parent)
         self.controller = controller
-
-
 
         # Configure grid layout
         self.grid_rowconfigure((0, 1), weight=1)
@@ -16,21 +15,9 @@ class SettingsFrame(ctk.CTkFrame):
         self.scrollable_frame_active_users = ChooseActiveUserFrame(self, self.controller)
         self.scrollable_frame_active_users.grid(row=0, column=0, padx=(40, 20), pady=(20, 20), sticky="nsew")
 
-        # Create scrollable frame topics
-        self.scrollable_frame_topics = ctk.CTkScrollableFrame(self, label_text="Choose topics")
-        self.scrollable_frame_topics.grid(row=0, column=1, padx=(20, 40), pady=(20, 20), sticky="nsew")
-        self.scrollable_frame_topics.grid_columnconfigure(0, weight=1)
-        self.topics_switches = {}
-        self.topics_variables = {}
-
-        # Create topics switches
-        for i in range(len(self.controller.model.all_topics)):
-            topic = self.controller.model.all_topics[i]
-            self.topics_variables[topic] = ctk.StringVar(self, f"{topic}/0")
-            switch = ctk.CTkSwitch(self.scrollable_frame_topics, text=f"{topic}", state="on", offvalue=f"{topic}/x", onvalue=f"{topic}/1", variable=self.topics_variables[topic], command=self.update_available_topics)
-            switch.grid(row=i, column=0, padx=10, pady=(0, 10), sticky="ew")
-            switch.select()
-            self.topics_switches[topic] = switch
+        # Create scrollable frame for choosing active topics
+        self.scrollable_frame_active_topics = ChooseActiveTopicsFrame(self, self.controller)
+        self.scrollable_frame_active_topics.grid(row=0, column=1, padx=(20, 40), pady=(20, 20), sticky="nsew")
 
         # Edit users frame
         self.edit_users_frame = ctk.CTkScrollableFrame(self, label_text="Edit users")
