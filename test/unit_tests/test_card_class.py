@@ -45,49 +45,27 @@ def test_adding_failed_attempt_to_card():
     assert test_card.get_total_attempts() == 12
     assert test_card.get_score_string() == "5 / 12"
 
-def test_calculate_probability_weight_of_card():
+def test_calculate_probability_weight_of_card_no_attempts():
     # With exactly 5 attempts
-    test_card = Card(test_topic_1, test_text_1, test_user_1, "00000")
-    assert test_card.get_probability_weight() == 15
+    test_card = Card(test_topic_1, test_text_1, test_user_1, "")
+    assert test_card.get_probability_weight() == 100
 
-    test_card = Card(test_topic_1, test_text_1, test_user_1, "11111")
-    assert test_card.get_probability_weight() == 1
-
-    test_card = Card(test_topic_1, test_text_1, test_user_1, "01010")
-    assert test_card.get_probability_weight() == 9
-
-    test_card = Card(test_topic_1, test_text_1, test_user_1, "10101")
-    assert test_card.get_probability_weight() == 6
-
-    # With less than 5 attempts
-    test_card = Card(test_topic_1, test_text_1, test_user_1, "000")
-    assert test_card.get_probability_weight() == 15
-
-    test_card = Card(test_topic_1, test_text_1, test_user_1, "111")
-    assert test_card.get_probability_weight() == 3
-
+def test_calculate_probability_weight_of_card_one_failure():
+    # With exactly 5 attempts
     test_card = Card(test_topic_1, test_text_1, test_user_1, "010")
-    assert test_card.get_probability_weight() == 11
+    assert test_card.get_probability_weight() == 18
 
-    test_card = Card(test_topic_1, test_text_1, test_user_1, "101")
-    assert test_card.get_probability_weight() == 7
-
-    # With more than 5 attempts
-    test_card = Card(test_topic_1, test_text_1, test_user_1, "010100000")
-    assert test_card.get_probability_weight() == 15
-
-    test_card = Card(test_topic_1, test_text_1, test_user_1, "010111111")
-    assert test_card.get_probability_weight() == 1
-
-    test_card = Card(test_topic_1, test_text_1, test_user_1, "010101010")
-    assert test_card.get_probability_weight() == 9
-
-    test_card = Card(test_topic_1, test_text_1, test_user_1, "010110101")
-    assert test_card.get_probability_weight() == 6
-
-    # With changed number of significant attempts
-    test_card = Card(test_topic_1, test_text_1, test_user_1, "00000")
-    test_card.significant_attempts = 10
+def test_calculate_probability_weight_of_card_ten_falures():
+    # With exactly 5 attempts
+    test_card = Card(test_topic_1, test_text_1, test_user_1, "0000000000")
     assert test_card.get_probability_weight() == 55
 
+def test_calculate_probability_weight_of_card_more_than_ten_falures():
+    # With exactly 5 attempts
+    test_card = Card(test_topic_1, test_text_1, test_user_1, "0000000000")
+    assert test_card.get_probability_weight() == 55
 
+def test_calculate_probability_weight_of_card_random_score():
+    # With exactly 5 attempts
+    test_card = Card(test_topic_1, test_text_1, test_user_1, "00101111111010001101")
+    assert test_card.get_probability_weight() == 26

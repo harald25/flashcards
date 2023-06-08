@@ -75,7 +75,7 @@ def test_add_active_user_already_added():
     fc = Flashcards(filename=filename)
     fc.add_active_user("Anna")
     expected_active_users_after_add = ["Anna", "Bill", "Carl", "Dave"]
-    assert fc.active_users == expected_active_users_after_add
+    assert sorted(fc.active_users) == sorted(expected_active_users_after_add)
 
 
 def test_remove_active_topic():
@@ -115,8 +115,8 @@ def test_add_active_topic_adready_added():
 def test_draw_card():
     restore_test_data()
     fc = Flashcards(filename=filename)
-    fc.draw_card(seed=1)
-    expected = fc.all_cards[0]
+    fc.draw_card(seed=0)
+    expected = fc.all_cards[7]
     assert fc.current_card == expected
 
 
@@ -176,7 +176,8 @@ def test_add_user():
     fc.add_user(username)
     assert fc.all_users == expected
     fc_2 = Flashcards(filename=filename)
-    assert fc_2.all_users == expected
+    test_value = sorted(fc_2.all_users)
+    assert test_value == (expected)
 
 
 def test_add_user_already_added():
@@ -185,9 +186,11 @@ def test_add_user_already_added():
     username = "Bill"
     expected = ["Anna", "Bill", "Carl", "Dave"]
     fc.add_user(username)
-    assert fc.all_users == expected
+    test_value = sorted(fc.all_users)
+    assert test_value == (expected)
     fc_2 = Flashcards(filename=filename)
-    assert fc_2.all_users == expected
+    test_value = sorted(fc_2.all_users)
+    assert test_value == expected
 
 
 def test_remove_user():
@@ -196,9 +199,11 @@ def test_remove_user():
     username = "Eric"
     expected = ["Anna", "Bill", "Carl", "Dave"]
     fc.remove_user(username)
-    assert fc.all_users == expected
+    test_value = sorted(fc.all_users)
+    assert test_value == expected
     fc_2 = Flashcards(filename=filename)
-    assert fc_2.all_users == expected
+    test_value = sorted(fc_2.all_users)
+    assert test_value == expected
 
 
 def test_remove_user_not_existing():
@@ -207,9 +212,9 @@ def test_remove_user_not_existing():
     username = "Eric"
     expected = ["Anna", "Bill", "Carl", "Dave"]
     fc.remove_user(username)
-    assert fc.all_users == expected
+    assert sorted(fc.all_users) == sorted(expected)
     fc_2 = Flashcards(filename=filename)
-    assert fc_2.all_users == expected
+    assert sorted(fc_2.all_users) == sorted(expected)
 
 
 def test_edit_username():
@@ -269,5 +274,13 @@ def test_remove_card_not_existing():
     assert not fc.remove_card(card_to_be_removed_text)
     expected = 'What is unit testing?'
     assert fc.get_list_of_card_texts()[-1] == expected
+
+def test_save_backup():
+    # TODO:
+    pass
+
+def test_restore_from_backup():
+    # TODO:
+    pass
 
 

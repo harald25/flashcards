@@ -1,5 +1,4 @@
 import customtkinter as ctk
-# from controller import Controller
 
 
 class ChooseActiveTopicsFrame(ctk.CTkScrollableFrame):

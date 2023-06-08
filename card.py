@@ -9,7 +9,6 @@ class Card:
         self.text = text
         self.user = user
         self.score = score
-        self.significant_attempts = 5
 
     def __repr__(self):
         return f"Topic:  {self.topic}\nText:   {self.text}\nUser:   {self.user}\nScore:  {self.score}"
@@ -34,21 +33,23 @@ class Card:
         return f"{correct} / {total_attempts}"
 
     def get_probability_weight(self):
-        """Takes into consideration the last 5 attempts on each card. The most recent attempt counts for 10 weight
-        points. The second most recent card counts for 4 weight points, and so on. It only counts points for failed
+        """Takes into consideration the last 10 attempts on each card. The most recent attempt counts for 10 weight
+        points. The second most recent card counts for 9 weight points, and so on. It only counts points for failed
         attempts. This gives cards with more failed attempts a higher probability weight.
         TODO: This calculation is subject for revision."""
 
-        probability_weight = 0
-        n = self.significant_attempts
+        if len(self.score) == 0:
+            probability_weight = 100
+            return probability_weight
 
-        for i in range(1, n+1):
-            if len(self.score) >= i:
-                bit = int(self.score[-i])
+        probability_weight = 0
+        n = 10      # Significant attempts. Only looks at the last 10 attempts
+
+        for i in range(n):
+            if len(self.score) >= i+1:
+                bit = int(self.score[-(i+1)])
                 if bit == 0:
-                    probability_weight += 1 + n - i
-            else:
-                probability_weight += 1 + n - i
+                    probability_weight += (10 - i)
 
         if probability_weight == 0:
             probability_weight += 1

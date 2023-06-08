@@ -1,8 +1,10 @@
 import pandas as pd
 import random
+import shutil
+
 from card import Card
 import os
-from datetime import datetime, timezone
+from datetime import datetime
 
 # TODO: Save card should be here
 # TODO: Do i need backups?
@@ -36,11 +38,11 @@ class Flashcards:
         for user in df.head():
             if user not in ["Topic", "Text"]:
                 for i in range(len(df[user])):
-                    topic = df["Topic"][i]
-                    text = df["Text"][i]
+                    topic = str(df["Topic"][i])
+                    text = str(df["Text"][i])
                     if len(text) > 200:
                         text = text[:200]
-                    score = df[user][i]
+                    score = str(df[user][i])
                     card = Card(topic, text, user, score)
                     self.all_cards.append(card)
 
@@ -93,13 +95,14 @@ class Flashcards:
         probability_weights = []
         for card in pool_of_possible_cards:
             probability_weights.append(card.get_probability_weight())
+
+        # Adjusts weights by degree of randomness
         for i in range(len(probability_weights)):
-            weight = probability_weights[i]
-            weight = weight ** ((100 - self.degree_of_randomness) / 100)
-            probability_weights[i] = weight
+            probability_weights[i] = probability_weights[i] ** ((100 - self.degree_of_randomness) / 100)
 
         random.seed(seed)
         choices = random.choices(pool_of_possible_cards, probability_weights, k=1)
+        choices = list(choices)
         self.current_card = choices[0]
 
     def check_if_valid_username(self, username):
@@ -172,13 +175,10 @@ class Flashcards:
 
         return True
 
-
-
     def get_list_of_card_texts(self):
         """Reutns a list of strings of all the current cards in the deck."""
         df = pd.read_csv(self.filename, sep=";")
         return list(df["Text"])
-
 
     def edit_card(self, old_card_text, new_card_text):
         """Edits the text of a card."""
@@ -244,17 +244,39 @@ class Flashcards:
 
         return True
 
+    def save_backup(self, dir="backups"):
+        """Saves the current data-file to the given directory. Filename will be <timestamp>.csv."""
+        time_now = int(datetime.now().timestamp())
+        filename = f"{time_now}.csv"
+        shutil.copyfile("data.csv", f"{dir}/{filename}")
 
-    def save_backup(self):
-        # TODO:
-        # filename = "data_backup_<string repr of date and time>.csv
-        # TODO: Unit test
-        pass
+        # Delete the oldest backup if more than 10
+        list_of_files = os.listdir("backups")
+        while len(list_of_files) > 10:
+            for i in range(len(list_of_files)):
+                list_of_files[i] = int(list_of_files[i].split(".")[0])
+            list_of_files = sorted(list_of_files)
+            file_to_be_deleted = f"{list_of_files[0]}.csv"
+            os.remove(f"{dir}/{file_to_be_deleted}")
+            list_of_files = os.listdir("backups")
+
+    def get_list_of_backups(self, dir="backups"):
+        """Returns list of all filenames in given directory."""
+        list_of_files = os.listdir(dir)
+        return list_of_files
 
     def restore_from_backup(self, backup):
-        # TODO:
-        # Copies the backup file over the original file
-        # TODO: Unit test
+        """Copies given backup file and overwrites the current data.csv file."""
+        shutil.copyfile(f"backups/{backup}", f"data.csv")
+
+    def convert_backup_filename_to_datetime(self, backup: str):
+        """Converts name of backup file from timestamp to formated time string."""
+        timestamp = float(backup.split(".")[0])
+        timestring = datetime.fromtimestamp(timestamp).strftime("%d-%B-%Y, %H:%M:%S")
+        return timestring
+
+
+
         pass
 
 
