@@ -35,8 +35,7 @@ class Card:
     def get_probability_weight(self):
         """Takes into consideration the last 10 attempts on each card. The most recent attempt counts for 10 weight
         points. The second most recent card counts for 9 weight points, and so on. It only counts points for failed
-        attempts. This gives cards with more failed attempts a higher probability weight.
-        TODO: This calculation is subject for revision."""
+        attempts. This gives cards with more failed attempts a higher probability weight."""
 
         if len(self.score) == 0:
             probability_weight = 100

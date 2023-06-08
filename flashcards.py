@@ -6,8 +6,7 @@ from card import Card
 import os
 from datetime import datetime
 
-# TODO: Save card should be here
-# TODO: Do i need backups?
+# TODO: Do i need a function to save data to file?
 
 
 class Flashcards:
@@ -27,7 +26,7 @@ class Flashcards:
         self.active_topics = self.all_topics
         self.current_card = None
 
-        # Draw the first card TODO: activate
+        # Draw the first card
         self.draw_card()
 
     def import_data_from_file(self):
@@ -53,7 +52,6 @@ class Flashcards:
                 self.all_topics.append(card.topic)
 
     def update_from_file(self):
-        # TODO: Also update participating?
         self.all_cards = []
         self.all_users = []
         self.all_topics = []
@@ -135,6 +133,9 @@ class Flashcards:
         column = ["" for _ in range(length)]
         df[username] = column
         df.to_csv(self.filename, index=False, sep=";")
+
+        # Adds user to active users
+        self.active_users.append(username)
 
         # Updates system
         self.update_from_file()
@@ -274,9 +275,4 @@ class Flashcards:
         timestamp = float(backup.split(".")[0])
         timestring = datetime.fromtimestamp(timestamp).strftime("%d-%B-%Y, %H:%M:%S")
         return timestring
-
-
-
-        pass
-
 
