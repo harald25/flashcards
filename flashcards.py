@@ -58,6 +58,8 @@ class Flashcards:
 
         self.import_data_from_file()
 
+
+
     def remove_active_user(self, participant: str):
         """Removes a user from list of participating users."""
         if participant in self.active_users:
@@ -154,6 +156,28 @@ class Flashcards:
         # Updates system
         self.update_from_file()
         return True
+
+    def add_attempt_to_card(self, card: Card, correct: bool):
+        """Add an attempt to a specific card. Either 1 for correct, or 0 for incorrect answer."""
+
+        # Info from card
+        user = card.user
+        text = card.text
+        new_score = card.score
+        if correct:
+            new_score += "1"
+        else:
+            new_score += "0"
+
+        # Updates score in datafile
+        df = pd.read_csv(self.filename, sep=";")
+        index = df.index[df['Text'] == text].tolist()[0]
+        df.at[index, user] = new_score
+        df.to_csv(self.filename, index=False, sep=";")
+
+        # Updates system
+        self.update_from_file()
+
 
     def edit_username(self, old_username, new_username):
         """Changes the name of a user"""

@@ -16,6 +16,7 @@ class App(ctk.CTk):
         # configure window
         self.title("Flashcards 3.0")
         self.geometry(f"{980}x{580}")
+        # TODO: Stop resizing
 
         # configure grid layout
         self.grid_columnconfigure(1, weight=1)

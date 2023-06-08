@@ -3,7 +3,7 @@ from frames.card_frame import CardFrame
 
 class PlayFrame(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        ctk.CTkFrame.__init__(self, parent)     # TODO: Move Corner radius
+        ctk.CTkFrame.__init__(self, parent)
         self.controller = controller
 
         # Configure grid layout
@@ -17,10 +17,7 @@ class PlayFrame(ctk.CTkFrame):
         self.headings_frame.grid_columnconfigure(0, weight=1)
         self.headings_frame.grid_rowconfigure(0, weight=1)
 
-        self.pre_header_label = ctk.CTkLabel(self.headings_frame, text="Welcome to", text_color="gray")
-        self.pre_header_label.grid(row=0, column=0, padx=10, pady=0, sticky="ew")
-
-        self.header_label = ctk.CTkLabel(self.headings_frame, text="Flashcards 3.0", font=ctk.CTkFont(size=24))
+        self.header_label = ctk.CTkLabel(self.headings_frame, text="F L A S H C A R D S", font=ctk.CTkFont(size=24))
         self.header_label.grid(row=1, column=0, padx=0, pady=0, sticky="ew")
 
         self.post_header_label = ctk.CTkLabel(self.headings_frame, text="Study like the champs!", text_color="gray")
@@ -41,10 +38,10 @@ class PlayFrame(ctk.CTkFrame):
         self.correct_segbuttons.configure(values=["Wrong", "Correct"])
         self.correct_segbuttons.set("Wrong")
 
-        self.next_participant_label = ctk.CTkLabel(self.buttons_frame, text=f"The next to answer is USER.", text_color="gray")
+        self.next_participant_label = ctk.CTkLabel(self.buttons_frame, text=f"The next to answer is {self.controller.model.current_card.user}.", text_color="gray")
         self.next_participant_label.grid(row=2, column=0, columnspan=3, sticky="nsew", padx=20, pady=(0, 0))
 
-        next_button = ctk.CTkButton(self.buttons_frame, text="Next card", width=260, round_width_to_even_numbers=False)
+        next_button = ctk.CTkButton(self.buttons_frame, text="Next card", width=260, round_width_to_even_numbers=False, command=controller.next_card_button_event)
         next_button.grid(row=3, column=0, columnspan=3, padx=20, pady=(0, 20))
 
         randomness_label_left = ctk.CTkLabel(self.buttons_frame, text="0% (Worst score)", text_color="gray")

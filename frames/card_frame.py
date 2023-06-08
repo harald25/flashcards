@@ -5,9 +5,10 @@ class CardFrame(ctk.CTkFrame):
     def __init__(self, parent, controller, preview=False):
         ctk.CTkFrame.__init__(self, parent)
         self.controller = controller
+        self.preview = preview
 
         # Text variables
-        if preview:
+        if self.preview:
             user_text = f" "
             topic_text = f"Press \"Next card\" to start playing."
             card_text = f"Question will display here"

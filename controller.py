@@ -8,7 +8,7 @@ class Controller():
         # First create the model
         self.model = Flashcards(filename="data.csv")
 
-        # Then create the view, which takes the model as a parameter
+        # Then create the view, which takes the controller as a parameter
         self.view = App(controller=self)
 
         # Start view-app main loop
@@ -27,4 +27,19 @@ class Controller():
 
     def update_frame(self):
         """Updates the frame to show correct values and labels."""
+        pass
+
+    def next_card_button_event(self):
+        # TODO
+
+        # Check if showing card or preview
+        if not self.view.play_frame.card_frame.preview:
+            self.model.current_card
+        # Give points
+        # Draw new card
+        # Update card_frame
+
+        answer = self.view.play_frame.correct_segbuttons.get()
+
+        print(f"The answer was {answer.lower()}.")
         pass
