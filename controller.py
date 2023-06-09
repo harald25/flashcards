@@ -48,7 +48,7 @@ class Controller():
             answer = self.view.play_frame.correct_segbuttons.get()
             if answer == "Correct":
                 self.model.add_attempt_to_card(self.model.current_card, True)
-            else:
+            elif answer == "Wrong":
                 self.model.add_attempt_to_card(self.model.current_card, False)
 
         # Draw new card
@@ -56,6 +56,10 @@ class Controller():
 
         # Update card_frame
         self.update_card_frame(preview=False)
+
+        # Update next player label
+        self.view.play_frame.next_user_label.configure(text=f"The next to answer is {self.model.active_users[0]}.")
+
 
     def randomness_slider_event(self, value):
         value = round(value)

@@ -35,11 +35,11 @@ class PlayFrame(ctk.CTkFrame):
 
         self.correct_segbuttons = ctk.CTkSegmentedButton(self.buttons_frame, width=260, dynamic_resizing=False)
         self.correct_segbuttons.grid(row=1, column=0, columnspan=3, padx=20, pady=(0, 20))
-        self.correct_segbuttons.configure(values=["Wrong", "Correct"])
-        self.correct_segbuttons.set("Wrong")
+        self.correct_segbuttons.configure(values=["Wrong", "Skip", "Correct"])
+        self.correct_segbuttons.set("Skip")
 
-        self.next_participant_label = ctk.CTkLabel(self.buttons_frame, text=f"The next to answer is {self.controller.model.current_card.user}.", text_color="gray")
-        self.next_participant_label.grid(row=2, column=0, columnspan=3, sticky="nsew", padx=20, pady=(0, 0))
+        self.next_user_label = ctk.CTkLabel(self.buttons_frame, text=f"The next to answer is {self.controller.model.active_users[0]}.", text_color="gray")
+        self.next_user_label.grid(row=2, column=0, columnspan=3, sticky="nsew", padx=20, pady=(0, 0))
 
         next_button = ctk.CTkButton(self.buttons_frame, text="Next card", width=260, round_width_to_even_numbers=False, command=controller.next_card_button_event)
         next_button.grid(row=3, column=0, columnspan=3, padx=20, pady=(0, 20))
