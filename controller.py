@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from app import App
 from flashcards import Flashcards
+from frames.card_frame import CardFrame
 
 
 class Controller():
@@ -25,8 +26,16 @@ class Controller():
         """Raises the given frame."""
         frame.tkraise()
 
-    def update_frame(self):
-        """Updates the frame to show correct values and labels."""
+    def update_card_frame(self, preview=False):
+        """Updates the card frame to show correct values and labels."""
+        self.view.play_frame.card_frame.grid_forget()
+        self.view.play_frame.card_frame.destroy()
+        self.view.play_frame.card_frame = CardFrame(parent=self.view.play_frame, controller=self, preview=preview)
+        self.view.play_frame.card_frame.grid(row=1, column=1, padx=100, pady=0, sticky="nsew")
+
+    def update_play_frame(self):
+        print("TODO!!!")
+        # TODO
         pass
 
     def next_card_button_event(self):
@@ -34,12 +43,25 @@ class Controller():
 
         # Check if showing card or preview
         if not self.view.play_frame.card_frame.preview:
-            self.model.current_card
-        # Give points
+
+            # Give points
+            answer = self.view.play_frame.correct_segbuttons.get()
+            if answer == "Correct":
+                self.model.add_attempt_to_card(self.model.current_card, True)
+            else:
+                self.model.add_attempt_to_card(self.model.current_card, False)
+
         # Draw new card
+        self.model.draw_card()
+
         # Update card_frame
+        self.update_card_frame(preview=False)
 
-        answer = self.view.play_frame.correct_segbuttons.get()
+    def randomness_slider_event(self, value):
+        value = round(value)
 
-        print(f"The answer was {answer.lower()}.")
-        pass
+        # Update label
+        self.view.play_frame.randomness_label_mid.configure(text=f"Degree of randomness: {value}%")
+
+        # Update model
+        self.model.degree_of_randomness = value

@@ -42,5 +42,5 @@ class ConfirmDeleteUserDialog(ctk.CTkToplevel):
             self.controller.model.remove_user(user)
 
         # Update settings window?? TODO: Is this working?
-        self.controller.view.settings_frame.scrollable_frame_active_users.update_frame()
+        # self.controller.view.settings_frame.scrollable_frame_active_users.update_card_frame()
         

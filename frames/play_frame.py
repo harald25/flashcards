@@ -47,12 +47,13 @@ class PlayFrame(ctk.CTkFrame):
         randomness_label_left = ctk.CTkLabel(self.buttons_frame, text="0% (Worst score)", text_color="gray")
         randomness_label_left.grid(row=4, column=0, sticky="w", padx=20, pady=(0, 0))
 
-        self.randomness_label_mid = ctk.CTkLabel(self.buttons_frame, text=f"Degree of randomness: {50}%.", text_color="gray", width=200)
+        self.randomness_label_mid = ctk.CTkLabel(self.buttons_frame, text=f"Degree of randomness: {50}%", text_color="gray", width=200)
         self.randomness_label_mid.grid(row=4, column=1, sticky="nsew", padx=20, pady=(0, 0))
 
         randomness_label_right = ctk.CTkLabel(self.buttons_frame, text="(Random card) 100%", text_color="gray")
         randomness_label_right.grid(row=4, column=2, sticky="e", padx=20, pady=(0, 0))
 
-        self.randomness_slider = ctk.CTkSlider(self.buttons_frame, to=100, width=260)
+        self.randomness_slider = ctk.CTkSlider(self.buttons_frame, to=100, width=260, command=self.controller.randomness_slider_event)
         self.randomness_slider.grid(row=5, column=0, columnspan=3, sticky="nsew", padx=20, pady=(0, 20))
         self.randomness_slider.set(50)
+        self.controller.model.degree_of_randomness = 50

@@ -105,6 +105,8 @@ class Flashcards:
         choices = list(choices)
         self.current_card = choices[0]
 
+        # TODO: If degree of randomness == 0: draw worst card
+
     def check_if_valid_username(self, username):
         """Checks if a username is valid. Max length: 25 chars.
         No special characters. Not already existing."""
