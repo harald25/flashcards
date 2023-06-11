@@ -33,9 +33,9 @@ class Controller():
         self.view.play_frame.card_frame = CardFrame(parent=self.view.play_frame, controller=self, preview=preview)
         self.view.play_frame.card_frame.grid(row=1, column=1, padx=100, pady=0, sticky="nsew")
 
-    def update_play_frame(self):
+    def update_play_frame(self, card_preview=False):
         print("TODO!!!")
-        # TODO
+        # TODO: Update card frame, update next_to_answer label, update randomness slider starting value
         pass
 
     def next_card_button_event(self):
@@ -69,3 +69,34 @@ class Controller():
 
         # Update model
         self.model.degree_of_randomness = value
+
+    def active_user_switch_event(self, user):
+
+        # check if no button is turned on
+        active_users_counter = 0
+        for key in self.view.settings_frame.scrollable_frame_active_users.active_users_switches:
+            active_users_counter += self.view.settings_frame.scrollable_frame_active_users.active_users_switches[key].get()
+        if active_users_counter == 0:
+            self.view.settings_frame.scrollable_frame_active_users.active_users_switches[user].select()
+            return
+
+        # Add or remove active users
+        if self.view.settings_frame.scrollable_frame_active_users.active_users_switches[user].get() == 1:
+            self.model.add_active_user(user)
+        elif self.view.settings_frame.scrollable_frame_active_users.active_users_switches[user].get() == 0:
+            self.model.remove_active_user(user)
+
+    def active_topic_switch_event(self, topic):
+        # check if no button is turned on
+        active_topics_counter = 0
+        for key in self.view.settings_frame.scrollable_frame_active_topics.active_topics_switches:
+            active_topics_counter += self.view.settings_frame.scrollable_frame_active_topics.active_topics_switches[key].get()
+        if active_topics_counter == 0:
+            self.view.settings_frame.scrollable_frame_active_topics.active_topics_switches[topic].select()
+            return
+
+        # Add or remove active topics
+        if self.view.settings_frame.scrollable_frame_active_topics.active_topics_switches[topic].get() == 1:
+            self.model.add_active_topic(topic)
+        elif self.view.settings_frame.scrollable_frame_active_topics.active_topics_switches[topic].get() == 0:
+            self.model.remove_active_topic(topic)
