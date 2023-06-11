@@ -2,6 +2,7 @@ import customtkinter as ctk
 from app import App
 from flashcards import Flashcards
 from frames.card_frame import CardFrame
+from frames.settings_frame import SettingsFrame
 
 
 class Controller():
@@ -32,6 +33,13 @@ class Controller():
         self.view.play_frame.card_frame.destroy()
         self.view.play_frame.card_frame = CardFrame(parent=self.view.play_frame, controller=self, preview=preview)
         self.view.play_frame.card_frame.grid(row=1, column=1, padx=100, pady=0, sticky="nsew")
+
+    def update_settings_frame(self):
+        """Updates the settings frame to show correct values and labels."""
+        self.view.settings_frame.grid_forget()
+        self.view.settings_frame.destroy()
+        self.view.settings_frame = SettingsFrame(parent=self.view, controller=self)
+        self.view.settings_frame.grid(row=0, column=1, sticky="nsew", padx=20, pady=20)
 
     def update_play_frame(self, card_preview=False):
         print("TODO!!!")
@@ -100,3 +108,21 @@ class Controller():
             self.model.add_active_topic(topic)
         elif self.view.settings_frame.scrollable_frame_active_topics.active_topics_switches[topic].get() == 0:
             self.model.remove_active_topic(topic)
+
+    def edit_user_event(self, user):
+        dialog = ctk.CTkInputDialog(text=f"What is the new name of {user}?", title="Edit user")
+        new_username = dialog.get_input()
+
+        # Change username
+        self.model.edit_username(user, new_username)
+
+        # Update frames
+        self.update_play_frame(card_preview=True)
+        self.update_settings_frame()
+
+
+    def delete_user_event(self, user):
+        print(f"Delete {user}")
+
+    def add_user_event(self):
+        print("Add user")
