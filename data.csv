@@ -1,5 +1,5 @@
-Topic;Text;Anna;Bill;Carl;Dave
-IN3050 - Machine Learning;What is a genetic algorithm?;1011110000000000;1011110000101001110000000;10111010000;100100
-IN3050 - Machine Learning;How does the weights in a multi layer perceptron (MLP) get updated?;1011010001011001011010000000000;101011000000000000;100101100000000000;11110110
-IN3240 - Software testing;What are the seven test principles?;111111;11111100000000;100101011100000;100111110000000000
-IN3240 - Software testing;What is unit testing?;1;10111010;100000;1111111000111011100000000
+Topic;Text;Bill
+IN3050 - Machine Learning;What is a genetic algorithm?;1011110000101001
+IN3050 - Machine Learning;How does the weights in a multi layer perceptron (MLP) get updated?;101011
+IN3240 - Software testing;What are the seven test principles?;111
+IN3240 - Software testing;What is unit testing?;1011

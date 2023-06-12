@@ -90,6 +90,7 @@ class Flashcards:
         for card in self.all_cards:
             if card.topic in self.active_topics and card.user == user:
                 pool_of_possible_cards.append(card)
+        # TODO: Remove current card from pool (in case of only one user)
 
         # Calculate probabilities for each card
         probability_weights = []
@@ -150,6 +151,10 @@ class Flashcards:
         if username not in self.all_users:
             return False
 
+        # Removes user from active users
+        if username in self.active_users:
+            self.active_users.remove(username)
+
         # Removes column from datafile
         df = pd.read_csv(self.filename, sep=";")
         df.drop(username, axis=1, inplace=True)
@@ -199,6 +204,9 @@ class Flashcards:
 
         # Updates system
         self.update_from_file()
+        if old_username in self.active_users:
+            self.active_users.remove(old_username)
+        self.active_users.append(new_username)
 
         return True
 

@@ -32,7 +32,7 @@ class EditUsersFrame(ctk.CTkScrollableFrame):
                 self.edit_user_buttons[user] = edit_user_button
 
 
-                delete_user_button = ctk.CTkButton(self, text="Delete", width=70, command=lambda user=user: self.controller.delete_user_event(user))
+                delete_user_button = ctk.CTkButton(self, text="Delete", width=70, command=lambda user=user: self.controller.open_confirm_delete_user_dialog(user))
                 delete_user_button.grid(row=row, column=2, padx=(5, 0), pady=(0, 10), sticky="e")
             else:
                 add_user_label = ctk.CTkLabel(self, text="Add new user", text_color="gray", justify=ctk.LEFT, anchor="w")

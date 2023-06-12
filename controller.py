@@ -1,8 +1,13 @@
+import time
+
 import customtkinter as ctk
 from app import App
 from flashcards import Flashcards
+from frames.play_frame import PlayFrame
 from frames.card_frame import CardFrame
 from frames.settings_frame import SettingsFrame
+from dialogs.confirm_delete_user_dialog import ConfirmDeleteUserDialog
+from dialogs.error_dialog import ErrorDialog
 
 
 class Controller():
@@ -13,14 +18,16 @@ class Controller():
         # Then create the view, which takes the controller as a parameter
         self.view = App(controller=self)
 
+        # Variables
+        self.open_dialog = False
+
         # Start view-app main loop
         self.view.mainloop()
 
-        # Variables
-        self.open_dialog_window = False
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         """Changes appearance mode. Possibe values: "dark", "light"."""
+        # TODO: Should this be here or in app?
         self.view.change_appearance_mode_event(new_appearance_mode)
 
     def show_frame(self, frame):
@@ -42,9 +49,9 @@ class Controller():
         self.view.settings_frame.grid(row=0, column=1, sticky="nsew", padx=20, pady=20)
 
     def update_play_frame(self, card_preview=False):
-        print("TODO!!!")
-        # TODO: Update card frame, update next_to_answer label, update randomness slider starting value
-        pass
+        # TODO: Can I do this without showing for a brief second?
+        self.view.play_frame.next_user_label.configure(text=f"The next to answer is {self.model.active_users[0]}.")
+        self.update_card_frame(card_preview)
 
     def next_card_button_event(self):
         # TODO
@@ -120,9 +127,46 @@ class Controller():
         self.update_play_frame(card_preview=True)
         self.update_settings_frame()
 
+    def delete_user_event(self, user: str, input: bool, dialog):
 
-    def delete_user_event(self, user):
-        print(f"Delete {user}")
+        # Destroy dialog window
+        dialog.destroy()
+
+        # Remove user from model
+        if input is True:
+            if len(self.model.all_users) > 1:
+                self.model.remove_user(user)
+            else:
+                self.raise_error("E0101")
+
+        # Update model
+        self.model.draw_card()
+
+        # Update frames
+        self.update_play_frame(card_preview=True)
+        self.update_settings_frame()
+
+
+
+    def open_confirm_delete_user_dialog(self, user):
+        dialog = ConfirmDeleteUserDialog(parent=self.view, controller=self, user=user)
+        dialog.wm_transient(self.view)
+
+
+
+    def raise_error(self, error_code: str):
+        errors = {"E0000": "Unknown error.",
+                  "E0101": "Cannot delete user. There must be atleast one user in the system at all times. "}
+
+        if error_code not in errors:
+            error_code = "E0000"
+        error_message = errors[error_code]
+
+        error_dialog = ErrorDialog(parent=self.view, controller=self, error_code=error_code, error_message=error_message)
+        error_dialog.wm_transient(self.view)
+
+    def close_dialog(self, dialog):
+        dialog.destroy()
 
     def add_user_event(self):
         print("Add user")
