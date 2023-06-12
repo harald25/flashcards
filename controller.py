@@ -169,4 +169,12 @@ class Controller():
         dialog.destroy()
 
     def add_user_event(self):
-        print("Add user")
+        dialog = ctk.CTkInputDialog(text=f"What is the new name of the new user?", title="Add user")
+        new_user = dialog.get_input()
+
+        # Change username
+        self.model.add_user(new_user)
+
+        # Update frames
+        self.update_play_frame(card_preview=True)
+        self.update_settings_frame()
