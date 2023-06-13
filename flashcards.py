@@ -10,7 +10,10 @@ from datetime import datetime
 
 
 class Flashcards:
-    def __init__(self, filename: str="data.csv"):
+    def __init__(self, controller, filename: str="data.csv"):
+        # Controller
+        self.controller = controller
+
         # Variables to keep track fo the deck
         self.all_cards = []
         self.all_users = []
@@ -115,23 +118,26 @@ class Flashcards:
 
         # Checks length of username
         if len(username) > 25:
-            return False
+            self.controller.raise_error("E-0102")
+            return
 
         # Check if username has no special chars
         if not username.isalnum():
-            return False
+            self.controller.raise_error("E-0103")
+            return
 
         # Check if username not in use.
         if username in self.all_users:
-            return False
-        return True
+            self.controller.raise_error("E-0104")
+            return
+        return
 
     def add_user(self, username: str):
         """Adds a user to the system from a string defining the username."""
 
         # Checks if username is valid
         if not self.check_if_valid_username(username):
-            return False
+            return
 
         # Adds column to datafile
         df = pd.read_csv(self.filename, sep=";", keep_default_na=False)
@@ -153,7 +159,8 @@ class Flashcards:
     def remove_user(self, username: str):
         """Removes a user from the system."""
         if username not in self.all_users:
-            return False
+            self.controller.raise_error("E-0105")
+            return
 
         # Removes user from active users
         if username in self.active_users:
@@ -166,7 +173,7 @@ class Flashcards:
 
         # Updates system
         self.update_from_file()
-        return True
+        return
 
     def add_attempt_to_card(self, card: Card, correct: bool):
         """Add an attempt to a specific card. Either 1 for correct, or 0 for incorrect answer."""
@@ -195,11 +202,12 @@ class Flashcards:
 
         # Check if old username exists
         if old_username not in self.all_users:
-            return False
+            self.controller.raise_error("E-0105")
+            return
 
         # Checks if new username is valid
         if not self.check_if_valid_username(new_username):
-            return False
+            return
 
         # Update username
         df = pd.read_csv(self.filename, sep=";", keep_default_na=False)
@@ -212,7 +220,7 @@ class Flashcards:
             self.active_users.remove(old_username)
         self.active_users.append(new_username)
 
-        return True
+        return
 
     def get_list_of_card_texts(self):
         """Reutns a list of strings of all the current cards in the deck."""

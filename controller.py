@@ -13,7 +13,7 @@ from dialogs.error_dialog import ErrorDialog
 class Controller():
     def __init__(self):
         # First create the model
-        self.model = Flashcards(filename="data.csv")
+        self.model = Flashcards(filename="data.csv", controller=self)
 
         # Then create the view, which takes the controller as a parameter
         self.view = App(controller=self)
@@ -121,7 +121,9 @@ class Controller():
         new_username = dialog.get_input()
 
         # Change username
-        self.model.edit_username(user, new_username)
+        success = self.model.edit_username(user, new_username)
+        if type(success) is str:
+            self.raise_error(success)
 
         # Update frames
         self.update_play_frame(card_preview=True)
@@ -137,7 +139,7 @@ class Controller():
             if len(self.model.all_users) > 1:
                 self.model.remove_user(user)
             else:
-                self.raise_error("E0101")
+                self.raise_error("E-0101")
 
         # Update model
         self.model.draw_card()
@@ -155,11 +157,15 @@ class Controller():
 
 
     def raise_error(self, error_code: str):
-        errors = {"E0000": "Unknown error.",
-                  "E0101": "Cannot delete user. There must be atleast one user in the system at all times. "}
+        errors = {"E-0000": "Unknown error.",
+                  "E-0101": "Cannot delete user. There must be atleast one user in the system at all times. ",
+                  "E-0102": "Username is too long. Length of username cannot exceed 25 cahracters.",
+                  "E-0103": "Username cannot contain any special characters.",
+                  "E-0104": "This username is already in use.",
+                  "E-0105": "This user does not exist."}
 
         if error_code not in errors:
-            error_code = "E0000"
+            error_code = "E-0000"
         error_message = errors[error_code]
 
         error_dialog = ErrorDialog(parent=self.view, controller=self, error_code=error_code, error_message=error_message)
