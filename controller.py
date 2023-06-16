@@ -2,6 +2,7 @@ import time
 
 import customtkinter as ctk
 from app import App
+import os
 from flashcards import Flashcards
 from frames.play_frame import PlayFrame
 from frames.card_frame import CardFrame
@@ -187,3 +188,11 @@ class Controller():
         self.update_play_frame(card_preview=True)
         self.update_settings_frame()
         print("Updated")
+
+    def save_backup_event(self):
+        list_of_files = os.listdir("backups")
+        if len(list_of_files) >= 10:
+            # confirm delete oldest backup
+            pass
+        else:
+            self.model.save_backup()

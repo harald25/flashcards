@@ -10,8 +10,9 @@ class App(ctk.CTk):
         super().__init__()
 
         self.controller = controller
-        # # Create a model
-        # model = Flashcards(filename="data.csv")
+
+        # Set appearance mode
+        self.change_appearance_mode_event("Dark")
 
         # configure window
         self.title("Flashcards 3.0")
