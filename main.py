@@ -28,7 +28,13 @@ Test (own folder with test files and test_data.csv-file)
 - txt-file explaining the testing process.
 - Unit tests
 - test a lot of different user stories
+
 """
+
+# PROJECT DEFECTS FOUND
+# TODO: Cannot add new user properly
+
+
 
 if __name__ == '__main__':
     c = Controller()

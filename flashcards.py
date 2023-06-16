@@ -119,24 +119,26 @@ class Flashcards:
         # Checks length of username
         if len(username) > 25:
             self.controller.raise_error("E-0102")
-            return
+            return False
 
         # Check if username has no special chars
         if not username.isalnum():
             self.controller.raise_error("E-0103")
-            return
+            return False
 
         # Check if username not in use.
         if username in self.all_users:
             self.controller.raise_error("E-0104")
-            return
-        return
+            return False
+        return True
 
     def add_user(self, username: str):
         """Adds a user to the system from a string defining the username."""
 
         # Checks if username is valid
-        if not self.check_if_valid_username(username):
+        if self.check_if_valid_username(username) is False:
+            # TODO: Remove print
+            print("Username not valid")
             return
 
         # Adds column to datafile
@@ -173,6 +175,10 @@ class Flashcards:
 
         # Updates system
         self.update_from_file()
+
+        # If no active users, make first user active
+        if len(self.active_users) == 0:
+            self.active_users.append(self.all_users[0])
         return
 
     def add_attempt_to_card(self, card: Card, correct: bool):
