@@ -14,7 +14,7 @@ class BackupsFrame(ctk.CTkScrollableFrame):
         self.save_backup_label = ctk.CTkLabel(master=self, text="Save backup", text_color="gray")
         self.save_backup_label.grid(row=0, column=0, padx=10, pady=(0, 10), sticky="w")
 
-        self.save_backup_button = ctk.CTkButton(master=self, text="Backup", width=70, command=self.controller.save_backup_event)
+        self.save_backup_button = ctk.CTkButton(master=self, text="Backup", width=70, command=self.controller.confirm_save_backup_event)
         self.save_backup_button.grid(row=0, column=1, padx=0, pady=(0, 10), sticky="e")
 
         backups = self.controller.model.get_list_of_backups()

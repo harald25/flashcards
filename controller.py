@@ -9,6 +9,7 @@ from frames.card_frame import CardFrame
 from frames.settings_frame import SettingsFrame
 from dialogs.confirm_delete_user_dialog import ConfirmDeleteUserDialog
 from dialogs.error_dialog import ErrorDialog
+from dialogs.confirm_delete_oldest_backup_dialog import ConfirmDeleteOldestBackupDialog
 
 
 class Controller():
@@ -189,10 +190,20 @@ class Controller():
         self.update_settings_frame()
         print("Updated")
 
-    def save_backup_event(self):
+    def confirm_save_backup_event(self):
         list_of_files = os.listdir("backups")
         if len(list_of_files) >= 10:
-            # confirm delete oldest backup
-            pass
+            confirm_delete_oldest_backup_dialog = ConfirmDeleteOldestBackupDialog(parent=self.view, controller=self)
+            confirm_delete_oldest_backup_dialog.wm_transient(self.view)
         else:
             self.model.save_backup()
+            self.update_settings_frame()
+
+    def save_backup_dialog_event(self, input, dialog):
+        # Cloase dialog
+        dialog.destroy()
+
+        # Save backup
+        if input is True:
+            self.model.save_backup()
+            self.update_settings_frame()

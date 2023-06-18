@@ -306,7 +306,7 @@ class Flashcards:
         # Delete the oldest backup if more than 10
         list_of_files = os.listdir("backups")
         # TODO: >= or just > (same in controller)
-        while len(list_of_files) >= 10:
+        while len(list_of_files) > 10:
             for i in range(len(list_of_files)):
                 list_of_files[i] = int(list_of_files[i].split(".")[0])
             list_of_files = sorted(list_of_files)
