@@ -31,9 +31,9 @@ class BackupsFrame(ctk.CTkScrollableFrame):
                 backup_label.grid(row=i+1, column=0, padx=10, pady=(0, 10), sticky="w")
 
                 # Create delete buttons
-                backup_delete_button = ctk.CTkButton(master=self, text="Delete", width=70, command=lambda backup=backup: self.controller.delete_backup_event(backup))   # TODO: Add command
+                backup_delete_button = ctk.CTkButton(master=self, text="Delete", width=70, command=lambda backup=backup: self.controller.delete_backup_event(backup))
                 backup_delete_button.grid(row=i+1, column=1, padx=0, pady=(0, 10), sticky="e")
 
                 # Create restore buttons
-                backup_restore_button = ctk.CTkButton(master=self, text="Restore", width=70)      # TODO: Add command
+                backup_restore_button = ctk.CTkButton(master=self, text="Restore", width=70, command=lambda backup=backup: self.controller.restore_from_backup_event(backup))
                 backup_restore_button.grid(row=i+1, column=2, padx=(5, 0), pady=(0, 10), sticky="e")

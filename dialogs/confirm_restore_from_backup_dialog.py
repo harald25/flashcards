@@ -1,7 +1,7 @@
 import customtkinter as ctk
 
 
-class ConfirmDeleteBackupDialog(ctk.CTkToplevel):
+class ConfirmRestoreFromBackupDialog(ctk.CTkToplevel):
     def __init__(self, parent, controller, backup, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
 
@@ -9,11 +9,11 @@ class ConfirmDeleteBackupDialog(ctk.CTkToplevel):
         self.controller = controller
         self.backup = backup
         self.backup_stringrep = self.controller.model.convert_backup_filename_to_datetime(self.backup)
-        self.label_text = f"Are you sure that you want do delete the backup\nfrom {self.backup_stringrep}?\n\nThis action can not be undone, and all data saved\nin the backup will be lost."
+        self.label_text = f"Are you sure that you want do restore the backup\nfrom {self.backup_stringrep}?\n\nThis action can not be undone, and all current,\n and not saved progress will be lost."
 
         # Configure window
         self.geometry("400x180")
-        self.title = f"Confirm delete backup."
+        self.title = f"Confirm restore from backup."
 
         # Configure grid layout
         self.grid_rowconfigure(0, weight=1)
@@ -26,14 +26,14 @@ class ConfirmDeleteBackupDialog(ctk.CTkToplevel):
 
         # Create button YES
         self.yes_button = ctk.CTkButton(self, text="Yes",
-                                        command=lambda: self.controller.delete_backup_dialog_event(
+                                        command=lambda: self.controller.restore_from_backup_dialog_event(
                                             backup=backup, input=True,
                                             dialog=self))
         self.yes_button.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")
 
         # Create button NO
         self.no_button = ctk.CTkButton(self, text="Cancel",
-                                       command=lambda: self.controller.delete_backup_dialog_event(
+                                       command=lambda: self.controller.restore_from_backup_dialog_event(
                                            backup=backup, input=False,
                                            dialog=self))
         self.no_button.grid(row=1, column=1, padx=20, pady=20, sticky="nsew")
