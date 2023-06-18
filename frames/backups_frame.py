@@ -15,7 +15,7 @@ class BackupsFrame(ctk.CTkScrollableFrame):
         self.save_backup_label.grid(row=0, column=0, padx=10, pady=(0, 10), sticky="w")
 
         self.save_backup_button = ctk.CTkButton(master=self, text="Backup", width=70, command=self.controller.confirm_save_backup_event)
-        self.save_backup_button.grid(row=0, column=1, padx=0, pady=(0, 10), sticky="e")
+        self.save_backup_button.grid(row=0, column=2, padx=0, pady=(0, 10), sticky="e")
 
         backups = self.controller.model.get_list_of_backups()
         print(backups)
@@ -30,6 +30,10 @@ class BackupsFrame(ctk.CTkScrollableFrame):
                 backup_label = ctk.CTkLabel(master=self, text=self.controller.model.convert_backup_filename_to_datetime(backup))
                 backup_label.grid(row=i+1, column=0, padx=10, pady=(0, 10), sticky="w")
 
-                # Create buttons
-                backup_button = ctk.CTkButton(master=self, text="Restore", width=70)      # TODO: Add command
-                backup_button.grid(row=i+1, column=1, padx=0, pady=(0, 10), sticky="e")
+                # Create delete buttons
+                backup_delete_button = ctk.CTkButton(master=self, text="Delete", width=70, command=lambda backup=backup: self.controller.delete_backup_event(backup))   # TODO: Add command
+                backup_delete_button.grid(row=i+1, column=1, padx=0, pady=(0, 10), sticky="e")
+
+                # Create restore buttons
+                backup_restore_button = ctk.CTkButton(master=self, text="Restore", width=70)      # TODO: Add command
+                backup_restore_button.grid(row=i+1, column=2, padx=(5, 0), pady=(0, 10), sticky="e")

@@ -10,6 +10,7 @@ from frames.settings_frame import SettingsFrame
 from dialogs.confirm_delete_user_dialog import ConfirmDeleteUserDialog
 from dialogs.error_dialog import ErrorDialog
 from dialogs.confirm_delete_oldest_backup_dialog import ConfirmDeleteOldestBackupDialog
+from dialogs.confirm_delete_backup_dialog import ConfirmDeleteBackupDialog
 
 
 class Controller():
@@ -202,8 +203,34 @@ class Controller():
     def save_backup_dialog_event(self, input, dialog):
         # Cloase dialog
         dialog.destroy()
-
         # Save backup
         if input is True:
             self.model.save_backup()
             self.update_settings_frame()
+
+    def delete_backup_event(self, backup):
+
+        # Open confirm dialog
+        dialog = ConfirmDeleteBackupDialog(parent=self.view, controller=self, backup=backup)
+        dialog.wm_transient(self.view)
+
+    def delete_backup_dialog_event(self, backup, input, dialog):
+        # Close dialog window
+        dialog.destroy()
+
+        # Delete backup
+        if input is True:
+            self.model.delete_backup(backup)
+
+        # Update window
+        self.update_settings_frame()
+
+    def restore_from_backup_event(self, backup):
+        pass
+
+    def restore_from_backup_dialog_event(self, backup, input, dialog):
+        pass
+
+
+
+

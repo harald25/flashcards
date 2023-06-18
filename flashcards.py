@@ -326,6 +326,11 @@ class Flashcards:
     def convert_backup_filename_to_datetime(self, backup: str):
         """Converts name of backup file from timestamp to formated time string."""
         timestamp = float(backup.split(".")[0])
-        timestring = datetime.fromtimestamp(timestamp).strftime("%d-%B-%Y, %H:%M:%S")
+        timestring = datetime.fromtimestamp(timestamp).strftime("%d. %B %Y, %H:%M")
         return timestring
+
+    def delete_backup(self, backup: str):
+        os.remove(f"backups/{backup}")
+
+
 
