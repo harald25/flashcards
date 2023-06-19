@@ -232,10 +232,30 @@ class Flashcards:
 
         return
 
-    def get_list_of_card_texts(self):
+    def get_list_of_card_texts(self, topic=None):
         """Reutns a list of strings of all the current cards in the deck."""
         df = pd.read_csv(self.filename, sep=";", keep_default_na=False)
-        return list(df["Text"])
+        if topic is None:
+            return list(df["Text"])
+        else:
+            card_texts = []
+            for card in self.all_cards:
+                if card.topic == topic:
+                    if card.text not in card_texts:
+                        card_texts.append(card.text)
+            print(card_texts)
+            return card_texts
+
+    def get_dict_of_topics_and_card_texts(self):
+        topic_card_dict = {}
+        for card in self.all_cards:
+            print(topic_card_dict.values())
+            if card.text not in topic_card_dict.values():
+                if card.topic not in topic_card_dict:
+                    topic_card_dict[card.topic] = [card.text]
+                else:
+                    topic_card_dict[card.topic].append(card.text)
+        return topic_card_dict
 
     def edit_card(self, old_card_text, new_card_text):
         """Edits the text of a card."""
@@ -321,6 +341,7 @@ class Flashcards:
     def get_list_of_backups(self, dir="backups"):
         """Returns list of all filenames in given directory."""
         list_of_files = os.listdir(dir)
+        # TODO: SHould this be sorted? Is it sorted anywhere else? Should be newest on top.
         return list_of_files
 
     def restore_from_backup(self, backup):

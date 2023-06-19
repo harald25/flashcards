@@ -2,6 +2,7 @@ import customtkinter as ctk
 from frames.menu_frame import MenuFrame
 from frames.play_frame import PlayFrame
 from frames.settings_frame import SettingsFrame
+from frames.edit_cards_frame import EditCardsFrame
 
 
 
@@ -34,6 +35,12 @@ class App(ctk.CTk):
         # Create setting frame
         self.settings_frame = SettingsFrame(parent=self, controller=self.controller)
         self.settings_frame.grid(row=0, column=1, sticky="nsew", padx=20, pady=20)
+
+        # Create edit cards frame
+        self.edit_cards_frame = EditCardsFrame(parent=self, controller=self.controller)
+        self.edit_cards_frame.grid(row=0, column=1, sticky="nsew", padx=20, pady=20)
+
+
 
         # Show frame
         self.controller.show_frame(self.play_frame)

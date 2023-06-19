@@ -84,6 +84,9 @@ class Controller():
         # Update next player label
         self.view.play_frame.next_user_label.configure(text=f"The next to answer is {self.model.active_users[0]}.")
 
+        # Update wrong/skip/correct button
+        self.view.play_frame.correct_segbuttons.set("Skip")
+
 
     def randomness_slider_event(self, value):
         value = round(value)

@@ -1,6 +1,9 @@
 import customtkinter as ctk
 from frames.card_frame import CardFrame
 
+# TODO: Info button/how to use button
+# TODO: Edit this card button on the current card
+
 class PlayFrame(ctk.CTkFrame):
     def __init__(self, parent, controller):
         ctk.CTkFrame.__init__(self, parent)

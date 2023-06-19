@@ -28,8 +28,8 @@ class MenuFrame(ctk.CTkFrame):
         button_settings.grid(row=3, column=0, padx=20, pady=10)
 
         # Edit cards button
-        button_edit_cards = ctk.CTkButton(self, text="Edit cards", state="disabled")
-        button_edit_cards.grid(row=4, column=0, padx=20, pady=10)
+        button_edit_cards = ctk.CTkButton(self, text="Edit cards", command=lambda: controller.show_frame(controller.view.edit_cards_frame))
+        button_edit_cards.grid(row=4, column=0, padx=20, pady=10, )
 
         # Statistics button
         button_statistics = ctk.CTkButton(self, text="Statistics", state="disabled")
