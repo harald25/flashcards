@@ -55,12 +55,16 @@ class Flashcards:
             if card.topic not in self.all_topics:
                 self.all_topics.append(card.topic)
 
-    def update_from_file(self):
+    def update_from_file(self, update_active=False):
         self.all_cards = []
         self.all_users = []
         self.all_topics = []
 
         self.import_data_from_file()
+
+        if update_active is True:
+            self.active_users = self.all_users
+            self.active_topics = self.all_topics
 
 
 
@@ -321,7 +325,12 @@ class Flashcards:
 
     def restore_from_backup(self, backup):
         """Copies given backup file and overwrites the current data.csv file."""
+
+        # Copy backup file over current data file
         shutil.copyfile(f"backups/{backup}", f"data.csv")
+
+        # Update system from current file. Also update active users and topics.
+        self.update_from_file(update_active=True)
 
     def convert_backup_filename_to_datetime(self, backup: str):
         """Converts name of backup file from timestamp to formated time string."""
