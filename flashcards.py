@@ -249,12 +249,18 @@ class Flashcards:
     def get_dict_of_topics_and_card_texts(self):
         topic_card_dict = {}
         for card in self.all_cards:
-            print(topic_card_dict.values())
-            if card.text not in topic_card_dict.values():
-                if card.topic not in topic_card_dict:
-                    topic_card_dict[card.topic] = [card.text]
-                else:
+            if card.topic not in topic_card_dict:
+                topic_card_dict[card.topic] = [card.text]
+            else:
+                if card.text not in topic_card_dict[card.topic]:
                     topic_card_dict[card.topic].append(card.text)
+
+        # Sort keys alphabetically
+        topic_card_dict = dict(sorted(topic_card_dict.items()))
+
+        # Sort values alphabetically
+        for key in topic_card_dict:
+            topic_card_dict[key] = sorted(topic_card_dict[key])
         return topic_card_dict
 
     def edit_card(self, old_card_text, new_card_text):
@@ -279,7 +285,9 @@ class Flashcards:
 
         # Check if card exists
         if new_card_text in self.get_list_of_card_texts():
-            return False
+            return False        # TODO: Throw error
+
+        # TODO: Add length limit
 
         # Updates data file
         df = pd.read_csv(self.filename, sep=";", keep_default_na=False)

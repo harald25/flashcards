@@ -10,6 +10,8 @@ from flashcards import Flashcards
 from frames.play_frame import PlayFrame
 from frames.card_frame import CardFrame
 from frames.settings_frame import SettingsFrame
+from frames.list_all_cards_frame import ListAllCardsFrame
+from frames.edit_cards_frame import EditCardsFrame
 
 # Importing dialog windows
 from dialogs.confirm_delete_user_dialog import ConfirmDeleteUserDialog
@@ -17,6 +19,7 @@ from dialogs.confirm_restore_from_backup_dialog import ConfirmRestoreFromBackupD
 from dialogs.error_dialog import ErrorDialog
 from dialogs.confirm_delete_oldest_backup_dialog import ConfirmDeleteOldestBackupDialog
 from dialogs.confirm_delete_backup_dialog import ConfirmDeleteBackupDialog
+from dialogs.add_card_dialog import AddCardCialog
 
 
 class Controller():
@@ -62,8 +65,21 @@ class Controller():
         self.view.play_frame.next_user_label.configure(text=f"The next to answer is {self.model.active_users[0]}.")
         self.update_card_frame(card_preview)
 
+    def update_list_all_cards_frame(self, topic="All topics"):
+        self.view.edit_cards_frame.list_all_cards_frame.grid_forget()
+        self.view.edit_cards_frame.list_all_cards_frame.destroy()
+        self.view.edit_cards_frame.list_all_cards_frame = ListAllCardsFrame(parent=self.view.edit_cards_frame, controller=self, topic=topic)
+        self.view.edit_cards_frame.list_all_cards_frame.grid(row=4, column=0, columnspan=2, padx=20, pady=20, sticky="nsew")
+
+    def update_edit_cards_frame(self):
+        self.view.edit_cards_frame.grid_forget()
+        self.view.edit_cards_frame.destroy()
+        self.view.edit_cards_frame = EditCardsFrame(parent=self.view, controller=self)
+        self.view.edit_cards_frame.grid(row=0, column=1, sticky="nsew", padx=20, pady=20)
+
+
     def next_card_button_event(self):
-        # TODO
+        # TODO: Anything more to do here, or did i just forget to remove this TODO?
 
         # Check if showing card or preview
         if not self.view.play_frame.card_frame.preview:
@@ -252,7 +268,16 @@ class Controller():
         self.update_play_frame()
         self.update_settings_frame()
 
+    def filter_cards_by_topic_event(self, topic="All topics"):
+        self.update_list_all_cards_frame(topic)
 
+    def add_card_event(self):
+        dialog = AddCardCialog(parent=self.view, controller=self)
+        dialog.wm_transient(self.view)
+
+    def add_card_dialog_event(self):
+        # TODO
+        pass
 
 
 

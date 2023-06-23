@@ -23,7 +23,7 @@ class EditCardsFrame(ctk.CTkFrame):
         self.add_card_label.grid(row=1, column=0, padx=20, pady=(0, 30), sticky="w")
 
         # Create add card button
-        self.add_card_button = ctk.CTkButton(master=self, text="Add card", width=140)  # TODO: Add command
+        self.add_card_button = ctk.CTkButton(master=self, text="Add card", width=140, command=self.controller.add_card_event)  # TODO: Add command
         self.add_card_button.grid(row=1, column=1, padx=10, pady=(0, 30), sticky="w")
 
         # Create filter cards label
@@ -33,7 +33,7 @@ class EditCardsFrame(ctk.CTkFrame):
         # Create filter cards option menu
         topics = self.controller.model.all_topics
         topics.insert(0, "All topics")
-        self.filter_cards_option_menu = ctk.CTkOptionMenu(master=self, width=260, values=topics)
+        self.filter_cards_option_menu = ctk.CTkOptionMenu(master=self, width=260, values=topics, command=self.controller.filter_cards_by_topic_event)
         self.filter_cards_option_menu.grid(row=2, column=1, padx=10, pady=0, sticky="w")
 
         # Create list all cards frame
