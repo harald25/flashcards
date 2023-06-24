@@ -32,8 +32,13 @@ class AddCardCialog(ctk.CTkToplevel):
 
         self.enter_card_text_textbox = ctk.CTkTextbox(master=self)
         self.enter_card_text_textbox.grid(row=2, column=0, columnspan=2, padx=10, pady=(0, 10), sticky="nsew")
+        # TODO: Add default text
 
-        # TODO: self.confirm_add_card_button = ctk
+        self.confirm_add_card_button = ctk.CTkButton(master=self, width=140, text="Add card", command=lambda: self.controller.add_card_dialog_event(self))
+        self.confirm_add_card_button.grid(row=3, column=0, padx=10, pady=10, sticky="e")
+
+        self.cancel_button = ctk.CTkButton(master=self, width=140, text="Cancel", command=self.destroy)
+        self.cancel_button.grid(row=3, column=1, padx=10, pady=10, sticky="w")
 
         """
         Select topic, or create new         COMBOBOX

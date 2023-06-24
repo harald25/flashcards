@@ -275,9 +275,22 @@ class Controller():
         dialog = AddCardCialog(parent=self.view, controller=self)
         dialog.wm_transient(self.view)
 
-    def add_card_dialog_event(self):
-        # TODO
-        pass
+    def add_card_dialog_event(self, dialog):
+        new_card_topic = dialog.select_topic_combobox.get()
+        new_card_text = dialog.enter_card_text_textbox.get("0.0", "end")[:-1]
+
+        # Check if new card is valid
+        if self.model.check_if_new_card_is_valid(new_card_topic, new_card_text) is True:
+            dialog.destroy()
+            self.model.add_card(new_card_topic, new_card_text)
+
+            # Update frames
+            self.update_play_frame()
+            self.update_card_frame(preview=True)    # Is this needed?
+            self.update_settings_frame()
+            self.update_edit_cards_frame()
+
+
 
 
 

@@ -21,6 +21,11 @@ class Flashcards:
         self.degree_of_randomness = 100
         self.filename = filename
 
+        # Other variables   # TODO: better comment name
+        self.text_limit = 120
+        self.topic_limit = 60
+        self.username_limit = 60
+
         # Importing all data from csv-file
         self.import_data_from_file()
 
@@ -280,14 +285,24 @@ class Flashcards:
 
         return True
 
-    def add_card(self, new_card_topic, new_card_text):
-        """Adds a card to the data file, and updates system."""
-
+    def check_if_new_card_is_valid(self, new_card_topic, new_card_text):
+        """Checks if the text and topic of a card is valid"""
         # Check if card exists
         if new_card_text in self.get_list_of_card_texts():
-            return False        # TODO: Throw error
+            return False  # TODO: Throw error
 
         # TODO: Add length limit
+        if len(new_card_text) > self.text_limit:
+            return False  # TODO: Throw error
+        if len(new_card_topic) > self.topic_limit:
+            return False  # TODO: Throw error
+
+        # TODO: Add forbidden characters
+
+        return True
+
+    def add_card(self, new_card_topic, new_card_text):
+        """Adds a card to the data file, and updates system."""
 
         # Updates data file
         df = pd.read_csv(self.filename, sep=";", keep_default_na=False)
