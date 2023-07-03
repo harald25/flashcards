@@ -20,6 +20,7 @@ from dialogs.error_dialog import ErrorDialog
 from dialogs.confirm_delete_oldest_backup_dialog import ConfirmDeleteOldestBackupDialog
 from dialogs.confirm_delete_backup_dialog import ConfirmDeleteBackupDialog
 from dialogs.add_card_dialog import AddCardCialog
+from dialogs.edit_card_dialog import EditCardCialog
 
 
 class Controller():
@@ -283,6 +284,29 @@ class Controller():
         if self.model.check_if_new_card_is_valid(new_card_topic, new_card_text) is True:
             dialog.destroy()
             self.model.add_card(new_card_topic, new_card_text)
+
+            # Update frames
+            self.update_play_frame()
+            self.update_card_frame(preview=True)    # Is this needed?
+            self.update_settings_frame()
+            self.update_edit_cards_frame()
+
+    def edit_card_text_event(self, old_card_text):
+        print(old_card_text)
+        dialog = EditCardCialog(parent=self.view, controller=self, old_card_text=old_card_text)
+        dialog.wm_transient(self.view)
+
+    def edit_card_text_dialog_event(self, dialog):
+        new_card_text = dialog.enter_card_text_textbox.get("0.0", "end")
+        old_card_text = dialog.old_card_text
+
+        # Check if new card text is valid
+        if self.model.check_if_new_card_text_is_valid(old_card_text, new_card_text) is True:
+            # Destroy dialog window
+            dialog.destroy()
+
+            # Edit card
+            self.model.edit_card(old_card_text, new_card_text)
 
             # Update frames
             self.update_play_frame()

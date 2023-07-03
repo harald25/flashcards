@@ -268,12 +268,30 @@ class Flashcards:
             topic_card_dict[key] = sorted(topic_card_dict[key])
         return topic_card_dict
 
+    def check_if_new_card_text_is_valid(self, old_card_text, new_card_text):
+        """Checks if new card text is valid."""
+
+        # Check if new and old card text is not the same
+        if new_card_text == old_card_text:
+            # TODO: Throw error
+            return False
+
+        # Check if old card text exists
+        if not old_card_text in self.get_list_of_card_texts():
+            # TODO: Throw error
+            return False
+
+        # Check if new card text does not already exist
+        if new_card_text in self.get_list_of_card_texts():
+            # TODO: Throw error
+            return False
+
+        # Check if valid characters
+        # TODO
+        return True
+
     def edit_card(self, old_card_text, new_card_text):
         """Edits the text of a card."""
-
-        # Check if card exists
-        if not old_card_text in self.get_list_of_card_texts():
-            return False
 
         # Updates data file
         df = pd.read_csv(self.filename, sep=";", keep_default_na=False)

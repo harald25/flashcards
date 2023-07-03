@@ -34,7 +34,7 @@ class ListAllCardsFrame(ctk.CTkScrollableFrame):
             for card_text in self.all_cards_dict[topic]:
 
                 # Create edit buttons
-                edit_button = ctk.CTkButton(master=self, text="Edit", width=70)
+                edit_button = ctk.CTkButton(master=self, text="Edit", width=70, command=lambda card_text=card_text: self.controller.edit_card_text_event(old_card_text=card_text))
                 edit_button.grid(row=row, column=0, padx=5, pady=(0, 10), sticky="w")
 
                 # Create delete buttons
