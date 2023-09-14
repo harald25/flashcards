@@ -30,7 +30,7 @@ class PlayFrame(ctk.CTkFrame):
         self.card_frame.grid(row=1, column=1, padx=100, pady=0, sticky="nsew")
 
         self.buttons_frame = ctk.CTkFrame(self, fg_color="transparent")
-        self.buttons_frame.grid(row=2, column=1, padx=20, pady=20, sticky="ew")
+        self.buttons_frame.grid(row=3, column=1, padx=20, pady=20, sticky="ew")
         self.buttons_frame.grid_columnconfigure((0, 1, 2), weight=1)
 
         self.correct_button_label = ctk.CTkLabel(self.buttons_frame, text="Did you answer correctly?", text_color="gray")

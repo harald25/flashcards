@@ -1,8 +1,5 @@
-Topic;Text;Anna;Bob;Dave
-IN3050 - Machine Learning;What is a genetic algorithm?;;;
-IN3050 - Machine Learning;How does the weights in a multi layer perceptron (MLP) get updated?;;;
-IN3240 - Software testing;What are the seven test principles?;;;
-IN3240 - Software testing;What is unit testing?;;;
-IN1234 - Test topic;"This is an edited test card.
-
-";;;
+Topic;Text;Anna;Bob;Dave;AnnaLisa;BT
+IN3050 - Machine Learning;What is a genetic algorithm?;;;;;
+IN3050 - Machine Learning;How does the weights in a multi layer perceptron (MLP) get updated?;;;;;
+IN3240 - Software testing;What are the seven test principles?;;;;;
+IN3240 - Software testing;What is unit testing?;;;;;

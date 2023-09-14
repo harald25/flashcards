@@ -1,4 +1,5 @@
 import customtkinter as ctk
+import tkinter as tk
 
 
 class ListAllCardsFrame(ctk.CTkScrollableFrame):
@@ -38,7 +39,7 @@ class ListAllCardsFrame(ctk.CTkScrollableFrame):
                 edit_button.grid(row=row, column=0, padx=5, pady=(0, 10), sticky="w")
 
                 # Create delete buttons
-                delete_button = ctk.CTkButton(master=self, text="Delete", width=70)
+                delete_button = ctk.CTkButton(master=self, text="Delete", width=70, command=lambda card_text=card_text: self.controller.delete_card_event(card_text=card_text))
                 delete_button.grid(row=row, column=1, padx=5, pady=(0, 10), sticky="w")
 
                 # Create labels
