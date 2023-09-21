@@ -36,6 +36,7 @@ Test (own folder with test files and test_data.csv-file)
 # TODO: Change text to no spaces i username
 # TODO: Edit user/edit card should keep original text in textbox.
 # TODO: Reverse backup list. Newest first
+# TODO: Update all docstrings
 
 
 

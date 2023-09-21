@@ -23,7 +23,7 @@ class EditCardsFrame(ctk.CTkFrame):
         self.add_card_label.grid(row=1, column=0, padx=20, pady=(0, 30), sticky="w")
 
         # Create add card button
-        self.add_card_button = ctk.CTkButton(master=self, text="Add card", width=140, command=self.controller.add_card_event)  # TODO: Add command
+        self.add_card_button = ctk.CTkButton(master=self, text="Add card", width=140, command=self.controller.add_card_event)
         self.add_card_button.grid(row=1, column=1, padx=10, pady=(0, 30), sticky="w")
 
         # Create filter cards label

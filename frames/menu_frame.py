@@ -9,7 +9,7 @@ class MenuFrame(ctk.CTkFrame):
         self._corner_radius = 0
 
         # Configure grid layout
-        self.grid_rowconfigure(8, weight=1)
+        self.grid_rowconfigure(7, weight=1)
 
         # Menu header
         label_menu_header = ctk.CTkLabel(self, text="Flashcards")
@@ -35,6 +35,10 @@ class MenuFrame(ctk.CTkFrame):
         button_statistics = ctk.CTkButton(self, text="Statistics", state="disabled")
         button_statistics.grid(row=5, column=0, padx=20, pady=10)
 
+        # How-to-use button
+        button_howtouse = ctk.CTkButton(self, text="How to use?", fg_color="transparent", border_color="white", border_width=1, command=controller.open_how_to_use_dialog)
+        button_howtouse.grid(row=8, column=0, padx=20, pady=10)
+
         # Appearance mode option menu
         self.optionmenu_appearance_mode = ctk.CTkOptionMenu(self, values=["Dark", "Light"], command=controller.change_appearance_mode_event)
-        self.optionmenu_appearance_mode.grid(row=9, column=0, padx=20, pady=20)
+        self.optionmenu_appearance_mode.grid(row=9, column=0, padx=20, pady=(10, 20))

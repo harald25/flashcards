@@ -31,8 +31,8 @@ class AddCardCialog(ctk.CTkToplevel):
         self.enter_card_text_label.grid(row=1, column=0, columnspan=2, padx=10, pady=(10, 0), sticky="w")
 
         self.enter_card_text_textbox = ctk.CTkTextbox(master=self)
+        self.enter_card_text_textbox.insert("0.0", "Enter new card text here...")
         self.enter_card_text_textbox.grid(row=2, column=0, columnspan=2, padx=10, pady=(0, 10), sticky="nsew")
-        # TODO: Add default text
 
         self.confirm_add_card_button = ctk.CTkButton(master=self, width=140, text="Add card", command=lambda: self.controller.add_card_dialog_event(self))
         self.confirm_add_card_button.grid(row=3, column=0, padx=10, pady=10, sticky="e")

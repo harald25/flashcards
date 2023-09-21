@@ -22,6 +22,7 @@ from dialogs.confirm_delete_backup_dialog import ConfirmDeleteBackupDialog
 from dialogs.add_card_dialog import AddCardCialog
 from dialogs.edit_card_dialog import EditCardCialog
 from dialogs.confirm_delete_card_dialog import ConfirmDeleteCardDialog
+from dialogs.how_to_use_dialog import HowToUseDialog
 
 
 class Controller():
@@ -331,4 +332,7 @@ class Controller():
         self.update_settings_frame()
         self.update_edit_cards_frame()
 
+    def open_how_to_use_dialog(self):
+        dialog = HowToUseDialog(parent=self.view, controller=self)
+        dialog.wm_transient(self.view)
 
