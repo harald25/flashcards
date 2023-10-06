@@ -22,6 +22,6 @@ The slider at the bottom of the screen lets you choose if the cards should be dr
 
 Functionality for adding, editing or deleting cards are all explained in the app.
 
-### About meant
+### About me
 
-I am a 32 year old informatics student at the University of Oslo, currently in the last year of my bachelor's degree. This app has been developed
+I am a 32 year old informatics student at the University of Oslo, currently in the last year of my bachelor's degree. This app has been developed to help me practise for my exams.
