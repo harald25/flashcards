@@ -10,7 +10,7 @@ class CardFrame(ctk.CTkFrame):
         # Text variables
         if self.preview:
             user_text = f" "
-            topic_text = f"Press \"Next card\" to start playing."
+            topic_text = f'Press "Next card" to start playing.'
             card_text = f"Question will display here"
             score_text = f" "
         else:
@@ -18,8 +18,6 @@ class CardFrame(ctk.CTkFrame):
             topic_text = f"Topic: {controller.model.current_card.topic}"
             card_text = f"{controller.model.current_card.text}"
             score_text = f"Score: {controller.model.current_card.get_score_string()}"
-
-
 
         # Configure grid layout
         self.grid_rowconfigure((0, 1, 3), weight=0)

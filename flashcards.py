@@ -10,7 +10,7 @@ from datetime import datetime
 
 
 class Flashcards:
-    def __init__(self, controller, filename: str="data.csv"):
+    def __init__(self, controller, filename: str = "data.csv"):
         # Controller
         self.controller = controller
 
@@ -71,8 +71,6 @@ class Flashcards:
             self.active_users = self.all_users
             self.active_topics = self.all_topics
 
-
-
     def remove_active_user(self, participant: str):
         """Removes a user from list of participating users."""
         if participant in self.active_users:
@@ -112,7 +110,9 @@ class Flashcards:
 
         # Adjusts weights by degree of randomness
         for i in range(len(probability_weights)):
-            probability_weights[i] = probability_weights[i] ** ((100 - self.degree_of_randomness) / 100)
+            probability_weights[i] = probability_weights[i] ** (
+                (100 - self.degree_of_randomness) / 100
+            )
 
         random.seed(seed)
         choices = random.choices(pool_of_possible_cards, probability_weights, k=1)
@@ -204,13 +204,12 @@ class Flashcards:
 
         # Updates score in datafile
         df = pd.read_csv(self.filename, sep=";", keep_default_na=False)
-        index = df.index[df['Text'] == text].tolist()[0]
+        index = df.index[df["Text"] == text].tolist()[0]
         df.at[index, user] = new_score
         df.to_csv(self.filename, index=False, sep=";")
 
         # Updates system
         self.update_from_file()
-
 
     def edit_username(self, old_username, new_username):
         """Changes the name of a user"""
@@ -402,6 +401,3 @@ class Flashcards:
 
     def delete_backup(self, backup: str):
         os.remove(f"backups/{backup}")
-
-
-

@@ -9,6 +9,7 @@ Controller
 - Creates an instance of view
 - Creates an instance of model = Flashcards()
 
+
 View
 - The view is the app instance
 - Main app instance imports all files
@@ -39,7 +40,5 @@ Test (own folder with test files and test_data.csv-file)
 # TODO: Update all docstrings
 
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     c = Controller()

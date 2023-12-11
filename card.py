@@ -1,9 +1,6 @@
-
-
-
-
 class Card:
     """Class representing each card in a deck."""
+
     def __init__(self, topic: str, text: str, user: str, score: str):
         self.topic = topic
         self.text = text
@@ -35,26 +32,26 @@ class Card:
     def get_probability_weight(self):
         """Takes into consideration the last 10 attempts on each card. The most recent attempt counts for 10 weight
         points. The second most recent card counts for 9 weight points, and so on. It only counts points for failed
-        attempts. This gives cards with more failed attempts a higher probability weight."""
+        attempts. This gives cards with more failed attempts a higher probability weight.
+        """
 
         if len(self.score) == 0:
             probability_weight = 100
             return probability_weight
 
         probability_weight = 0
-        n = 10      # Significant attempts. Only looks at the last 10 attempts
+        n = 10  # Significant attempts. Only looks at the last 10 attempts
 
         for i in range(n):
-            if len(self.score) >= i+1:
-                bit = int(self.score[-(i+1)])
+            if len(self.score) >= i + 1:
+                bit = int(self.score[-(i + 1)])
                 if bit == 0:
-                    probability_weight += (10 - i)
+                    probability_weight += 10 - i
 
         if probability_weight == 0:
             probability_weight += 1
 
         return probability_weight
-
 
     def add_attempt(self, correct: bool):
         """Adds an attempt to the bit-string representing the score."""

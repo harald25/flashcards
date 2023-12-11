@@ -1,5 +1,6 @@
 import customtkinter as ctk
 
+
 class MenuFrame(ctk.CTkFrame):
     def __init__(self, parent, controller):
         ctk.CTkFrame.__init__(self, master=parent)
@@ -20,25 +21,53 @@ class MenuFrame(ctk.CTkFrame):
         label_menu_header.grid(row=1, column=0, padx=20, pady=(10, 20))
 
         # Play button
-        button_play = ctk.CTkButton(self, text="Play", command=lambda: controller.show_frame(controller.view.play_frame))
+        button_play = ctk.CTkButton(
+            self,
+            text="Play",
+            command=lambda: controller.show_frame(controller.view.play_frame),
+        )
         button_play.grid(row=2, column=0, padx=20, pady=10)
 
         # Settings button
-        button_settings = ctk.CTkButton(self, text="Settings", command=lambda: controller.show_frame(controller.view.settings_frame))
+        button_settings = ctk.CTkButton(
+            self,
+            text="Settings",
+            command=lambda: controller.show_frame(controller.view.settings_frame),
+        )
         button_settings.grid(row=3, column=0, padx=20, pady=10)
 
         # Edit cards button
-        button_edit_cards = ctk.CTkButton(self, text="Edit cards", command=lambda: controller.show_frame(controller.view.edit_cards_frame))
-        button_edit_cards.grid(row=4, column=0, padx=20, pady=10, )
+        button_edit_cards = ctk.CTkButton(
+            self,
+            text="Edit cards",
+            command=lambda: controller.show_frame(controller.view.edit_cards_frame),
+        )
+        button_edit_cards.grid(
+            row=4,
+            column=0,
+            padx=20,
+            pady=10,
+        )
 
         # Statistics button
         button_statistics = ctk.CTkButton(self, text="Statistics", state="disabled")
         button_statistics.grid(row=5, column=0, padx=20, pady=10)
 
         # How-to-use button
-        button_howtouse = ctk.CTkButton(self, text="How to use?", fg_color="transparent", border_color="white", border_width=1, command=controller.open_how_to_use_dialog)
+        button_howtouse = ctk.CTkButton(
+            self,
+            text="How to use?",
+            fg_color="transparent",
+            border_color="white",
+            border_width=1,
+            command=controller.open_how_to_use_dialog,
+        )
         button_howtouse.grid(row=8, column=0, padx=20, pady=10)
 
         # Appearance mode option menu
-        self.optionmenu_appearance_mode = ctk.CTkOptionMenu(self, values=["Dark", "Light"], command=controller.change_appearance_mode_event)
+        self.optionmenu_appearance_mode = ctk.CTkOptionMenu(
+            self,
+            values=["Dark", "Light"],
+            command=controller.change_appearance_mode_event,
+        )
         self.optionmenu_appearance_mode.grid(row=9, column=0, padx=20, pady=(10, 20))
