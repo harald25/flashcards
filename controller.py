@@ -49,12 +49,12 @@ class Controller:
         """Raises the given frame."""
         frame.tkraise()
 
-    def update_card_frame(self, preview=False):
+    def update_card_frame(self, preview=False, hint=False):
         """Updates the card frame to show correct values and labels."""
         self.view.play_frame.card_frame.grid_forget()
         self.view.play_frame.card_frame.destroy()
         self.view.play_frame.card_frame = CardFrame(
-            parent=self.view.play_frame, controller=self, preview=preview
+            parent=self.view.play_frame, controller=self, preview=preview, hint=hint
         )
         self.view.play_frame.card_frame.grid(
             row=1, column=1, padx=100, pady=0, sticky="nsew"
@@ -402,3 +402,12 @@ class Controller:
     def open_how_to_use_dialog(self):
         dialog = HowToUseDialog(parent=self.view, controller=self)
         dialog.wm_transient(self.view)
+
+    def ask_for_hint_event(self):
+        if self.view.play_frame.card_frame.preview:
+            return
+        else:
+            # Send current flashcard to GPT to generate a hint
+            # Set hint to True
+            self.model.current_card.generate_hint()
+            self.update_card_frame(preview=False, hint=True)

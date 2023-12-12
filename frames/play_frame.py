@@ -31,13 +31,13 @@ class PlayFrame(ctk.CTkFrame):
         self.post_header_label.grid(row=2, column=0, padx=10, pady=0, sticky="ew")
 
         self.card_frame = CardFrame(
-            parent=self, controller=self.controller, preview=True
+            parent=self, controller=self.controller, preview=True, hint=False
         )
         self.card_frame.grid(row=1, column=1, padx=100, pady=0, sticky="nsew")
 
         self.buttons_frame = ctk.CTkFrame(self, fg_color="transparent")
-        self.buttons_frame.grid(row=3, column=1, padx=20, pady=20, sticky="ew")
-        self.buttons_frame.grid_columnconfigure((0, 1, 2), weight=1)
+        self.buttons_frame.grid(row=4, column=1, padx=20, pady=20, sticky="ew")
+        self.buttons_frame.grid_columnconfigure((0, 1, 2, 3), weight=1)
 
         self.correct_button_label = ctk.CTkLabel(
             self.buttons_frame, text="Did you answer correctly?", text_color="gray"
@@ -73,10 +73,19 @@ class PlayFrame(ctk.CTkFrame):
         )
         next_button.grid(row=3, column=0, columnspan=3, padx=20, pady=(0, 20))
 
+        hint_button = ctk.CTkButton(
+            self.buttons_frame,
+            text="Get hint",
+            width=260,
+            round_width_to_even_numbers=False,
+            command=controller.ask_for_hint_event,
+        )
+        hint_button.grid(row=4, column=0, columnspan=3, padx=20, pady=(0, 20))
+
         randomness_label_left = ctk.CTkLabel(
             self.buttons_frame, text="0% (Worst score)", text_color="gray"
         )
-        randomness_label_left.grid(row=4, column=0, sticky="w", padx=20, pady=(0, 0))
+        randomness_label_left.grid(row=5, column=0, sticky="w", padx=20, pady=(0, 0))
 
         self.randomness_label_mid = ctk.CTkLabel(
             self.buttons_frame,
@@ -85,13 +94,13 @@ class PlayFrame(ctk.CTkFrame):
             width=200,
         )
         self.randomness_label_mid.grid(
-            row=4, column=1, sticky="nsew", padx=20, pady=(0, 0)
+            row=5, column=1, sticky="nsew", padx=20, pady=(0, 0)
         )
 
         randomness_label_right = ctk.CTkLabel(
             self.buttons_frame, text="(Random card) 100%", text_color="gray"
         )
-        randomness_label_right.grid(row=4, column=2, sticky="e", padx=20, pady=(0, 0))
+        randomness_label_right.grid(row=5, column=2, sticky="e", padx=20, pady=(0, 0))
 
         self.randomness_slider = ctk.CTkSlider(
             self.buttons_frame,
@@ -100,7 +109,7 @@ class PlayFrame(ctk.CTkFrame):
             command=self.controller.randomness_slider_event,
         )
         self.randomness_slider.grid(
-            row=5, column=0, columnspan=3, sticky="nsew", padx=20, pady=(0, 20)
+            row=6, column=0, columnspan=3, sticky="nsew", padx=20, pady=(0, 20)
         )
         self.randomness_slider.set(50)
         self.controller.model.degree_of_randomness = 50

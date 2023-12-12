@@ -1,3 +1,6 @@
+from chatgpt_dialog import ChatGPTPrompt
+
+
 class Card:
     """Class representing each card in a deck."""
 
@@ -6,6 +9,8 @@ class Card:
         self.text = text
         self.user = user
         self.score = score
+        self.hint = ""
+        self.gpt_object = None
 
     def __repr__(self):
         return f"Topic:  {self.topic}\nText:   {self.text}\nUser:   {self.user}\nScore:  {self.score}"
@@ -59,3 +64,8 @@ class Card:
             self.score += "1"
         else:
             self.score += "0"
+
+    def generate_hint(self):
+        if self.gpt_object is None:
+            self.gpt_object = ChatGPTPrompt(subject="in5200", gpt_model="gpt-4")
+        self.hint = self.gpt_object.make_request(question=self.text)
